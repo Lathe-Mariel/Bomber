@@ -1,17 +1,9 @@
 package bomber;
 
-public class NPC extends BomberMan implements Runnable{
-
-	NPC(Field container) {
+public class Cat extends Enemy {
+	Cat(Field container){
 		super(container);
 	}
-
-	@Override
-	public void run() {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
-
 
 	@Override
 	void fired() {
@@ -21,8 +13,10 @@ public class NPC extends BomberMan implements Runnable{
 
 	@Override
 	boolean stepOn(Tile source) {
-		// TODO 自動生成されたメソッド・スタブ
-		return false;
+		if(source instanceof PC) {
+			((Creature)source).kill();
+		}
+		return true;
 	}
 
 	@Override
@@ -30,5 +24,4 @@ public class NPC extends BomberMan implements Runnable{
 		// TODO 自動生成されたメソッド・スタブ
 
 	}
-
 }

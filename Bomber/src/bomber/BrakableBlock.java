@@ -14,4 +14,7 @@ public class BrakableBlock extends Tile {
 	void fired() {
 
 	}
+	boolean stepOn(Tile source) {
+		return false;
+	}
 }

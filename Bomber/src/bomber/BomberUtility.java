@@ -8,6 +8,8 @@ import javax.imageio.ImageIO;
 
 public class BomberUtility {
 
+	public static long KEYCheckIntervalTime = 30;
+
 	static Image[] generalImageArray;
 
 	static {

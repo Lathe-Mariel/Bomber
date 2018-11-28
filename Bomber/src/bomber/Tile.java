@@ -4,21 +4,19 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
 
-public class Tile extends Component {
+public abstract class Tile extends Component {
 	Image image;
 	int frameX, frameY;
-	boolean steppable;
 	Field container;
-	
+
 	Tile(Field container){
-		steppable = false;
 		this.container = container;
 	}
-	
-	void fired() {
-		
-	}
-	
+
+	abstract void fired();
+
+	abstract boolean stepOn(Tile source);
+
 	public void paint(Graphics g) {
 		g.drawImage(image, 0,0, this);
 	}
