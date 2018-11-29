@@ -32,14 +32,6 @@ public class Cat extends Enemy {
 	}
 
 	@Override
-	boolean stepOn(Tile source) {
-		if (source instanceof BomberMan) {
-			((Creature) source).kill();
-		}
-		return true;
-	}
-
-	@Override
 	void kill() {
 		// TODO 自動生成されたメソッド・スタブ
 		//process of destorying myown
@@ -63,7 +55,7 @@ public class Cat extends Enemy {
 			direction = (int) (Math.random() * 4);
 			succession = (int) (Math.random() * 3);
 
-			System.out.println("direction: " + direction + "    succession: " + succession);
+			System.out.println("Cat movement->>    direction: " + direction + "    succession: " + succession);
 			do {
 				switch (direction) {
 				case 0:

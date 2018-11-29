@@ -1,6 +1,7 @@
 package bomber;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -8,6 +9,7 @@ public class Field extends JPanel {
 	private Tile tileArray[][];
 	private KeyEventHandler keyListener;
 	boolean tileArrayLocker;
+	private ArrayList<BomberMan> bomberMans;
 
 	public Dimension getPreferredSize() {
 		return new Dimension(840, 680);
@@ -33,6 +35,8 @@ public class Field extends JPanel {
 			add(new Obstacle(this, 0, i));
 			add(new Obstacle(this, tileArray.length - 1, i));
 		}
+
+		bomberMans = new ArrayList<BomberMan>();
 	}
 
 	boolean add(Tile newTile) {
@@ -65,7 +69,7 @@ public class Field extends JPanel {
 			return false;
 		}
 	}
-	
+
 	synchronized boolean toLeft(Creature source) {
 		int x = source.frameX - 1;
 		int y = source.frameY;
@@ -89,7 +93,7 @@ public class Field extends JPanel {
 			return false;
 		}
 	}
-	
+
 	synchronized boolean toDown(Creature source) {
 		int x = source.frameX;
 		int y = source.frameY +1;
@@ -101,13 +105,23 @@ public class Field extends JPanel {
 			return false;
 		}
 	}
-	
+
 	void init1PC() {
-		PC player0 = new PC(this, 1, 1);
-		keyListener.addPlayer(player0);
-		add(player0);
+		bomberMans.add(new PC(this, 1, 1));
+		keyListener.addPlayer((PC)bomberMans.get(0));
+		add(bomberMans.get(0));
 		Cat enemy0 = new Cat(this, 19,15);
 		add(enemy0);
 		new Thread(enemy0).start();
+		Cheetah enemy1 = new Cheetah(this, 19,1);
+		add(enemy1);
+		new Thread(enemy1).start();
+	}
+
+	BomberMan getBomberMan(int index) {
+		return bomberMans.get(index);
+	}
+	int getBomberManNumber() {
+		return bomberMans.size();
 	}
 }
