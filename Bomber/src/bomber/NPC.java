@@ -31,4 +31,10 @@ public class NPC extends BomberMan implements Runnable{
 
 	}
 
+	@Override
+	void contact() {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
 }

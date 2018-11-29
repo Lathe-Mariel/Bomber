@@ -30,17 +30,33 @@ public class KeyEventHandler implements KeyListener {
 		if (keyState[4]) {
 			new Thread() {
 				public void run() {
-					players[0].fireB();
+					players[0].putOnBomb();
 				}
 			}.start();
 		} else if (keyState[0]) {
-
+			new Thread() {
+				public void run() {
+					players[0].moveLeft();
+				}
+			}.start();
 		} else if (keyState[1]) {
-
+			new Thread() {
+				public void run() {
+					players[0].moveDown();
+				}
+			}.start();
 		} else if (keyState[2]) {
-
+			new Thread() {
+				public void run() {
+					players[0].moveRight();
+				}
+			}.start();
 		} else if (keyState[3]) {
-
+			new Thread() {
+				public void run() {
+					players[0].moveUp();
+				}
+			}.start();
 		} else if (keyState[9]) {
 
 		} else if (keyState[5]) {

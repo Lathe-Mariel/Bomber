@@ -1,10 +1,23 @@
 package bomber;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class PC extends BomberMan {
 
 	PC(Field container) {
-		super(container);
+		this(container, 1, 1);
+	}
+
+	PC(Field container, int x, int y) {
+		super(container, x, y);
+		try {
+			image = ImageIO.read(new File("usa.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -13,24 +26,6 @@ public class PC extends BomberMan {
 		//container.disappear(this)
 	}
 
-	/**
-	 * This method will be triggered by KeyEventHandler. B means generating Bomb.
-	 */
-	void fireB() {
-
-	}
-	void fireL() {
-
-	}
-	void fireR() {
-
-	}
-	void fireU() {
-
-	}
-	void fireD() {
-
-	}
 
 	@Override
 	boolean stepOn(Tile source) {
@@ -40,6 +35,12 @@ public class PC extends BomberMan {
 
 	@Override
 	void kill() {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	void contact() {
 		// TODO 自動生成されたメソッド・スタブ
 
 	}

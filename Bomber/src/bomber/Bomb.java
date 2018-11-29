@@ -1,20 +1,25 @@
 package bomber;
 
-import java.awt.Color;
-import java.awt.Graphics;
+public class Bomb extends Tile {
+	int power;
 
-public class Obstacle extends Tile {
-
-	Obstacle(Field container) {
+	Bomb(Field container) {
 		super(container);
+		power = 1;
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
-	Obstacle(Field container, int x, int y){
-		super(container, x, y);
+
+	void increasePower(int increasePower) {
+		power += increasePower;
+	}
+
+	void explode() {
+		// exploding process
 	}
 
 	@Override
 	void fired() {
+		explode();
 		// TODO 自動生成されたメソッド・スタブ
 
 	}
@@ -24,10 +29,4 @@ public class Obstacle extends Tile {
 		// TODO 自動生成されたメソッド・スタブ
 		return false;
 	}
-
-	public void paint(Graphics g){
-		g.setColor(Color.gray);
-		g.fill3DRect(0, 0, 40, 40, true);
-	}
-
 }
