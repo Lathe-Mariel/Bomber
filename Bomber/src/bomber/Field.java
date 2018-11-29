@@ -39,10 +39,11 @@ public class Field extends JPanel {
 		bomberMans = new ArrayList<BomberMan>();
 	}
 
-	boolean add(Tile newTile) {
+	synchronized boolean add(Tile newTile) {
 		super.add(newTile);
 		if (tileArray[newTile.frameX][newTile.frameY] == null) {
 			tileArray[newTile.frameX][newTile.frameY] = newTile;
+			repaint(50,newTile.x, newTile.y, 40,40);
 			return true;
 		}
 		return false;
@@ -104,6 +105,11 @@ public class Field extends JPanel {
 		} else {
 			return false;
 		}
+	}
+	
+	synchronized void eraseTile(Tile source) {
+		remove(source);
+		tileArray[source.frameX][source.frameY] = null;
 	}
 
 	void init1PC() {

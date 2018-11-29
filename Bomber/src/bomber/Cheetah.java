@@ -12,7 +12,7 @@ public class Cheetah extends Cat {
 		super(container, x, y);
 		speed = 400;
 		try {
-			imageArray = new Image[3];
+			imageArray = new Image[2];
 			imageArray[0] = ImageIO.read(new File("cheetah1l.png"));
 			imageArray[1] = ImageIO.read(new File("cheetah1r.png"));
 			//			imageArray[2] = ImageIO.read(new File("cheetah-attacked.png"));
@@ -25,7 +25,6 @@ public class Cheetah extends Cat {
 
 	@Override
 	public void run() {
-		int direction, succession;
 		int distance =0;
 		boolean lockon = false;
 
@@ -44,15 +43,17 @@ public class Cheetah extends Cat {
 			}else {
 			BomberMan target = container.getBomberMan((int) (Math.random() * container.getBomberManNumber()));
 			if (frameX > target.frameX) {
+				image = imageArray[0];
 				moveLeft();
 			} else if (frameX < target.frameX) {
+				image = imageArray[1];
 				moveRight();
 			} else {
 				distance = target.frameY - frameY;
 				lockon = true;
 				speed = 30;
 			}}
-			
+
 			try {
 				Thread.sleep(speed);
 			} catch (Exception e) {

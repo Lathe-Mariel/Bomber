@@ -30,6 +30,8 @@ public class KeyEventHandler implements KeyListener {
 		if (keyState[4]) {
 			new Thread() {
 				public void run() {
+					if(doublePressLock)return;
+					doublePressLock = true;
 					players[0].putOnBomb();
 				}
 			}.start();
@@ -106,6 +108,7 @@ public class KeyEventHandler implements KeyListener {
 		switch (key) {
 		case KeyEvent.VK_S:
 			keyState[4] = false;
+			doublePressLock = false;
 			break;
 		case KeyEvent.VK_A:
 			keyState[0] = false;

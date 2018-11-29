@@ -26,12 +26,12 @@ abstract public class Creature extends Tile {
 
 	abstract void contact();
 
-	void moveRight() {
-		if(moveProcess == true)return;
+	boolean moveRight() {
+		if(moveProcess == true)return false;
 		moveProcess = true;
 		if(!container.toRight(this)) {
 			moveProcess = false;
-			return;
+			return false;
 		}
 		setFrameX(frameX+1);
 		SwingUtilities.invokeLater(new Thread() {
@@ -43,14 +43,15 @@ abstract public class Creature extends Tile {
 			Thread.sleep(speed);
 		}catch(Exception e) {e.printStackTrace();}
 		moveProcess = false;
+		return true;
 	}
 
-	void moveLeft() {
-		if(moveProcess == true)return;
+	boolean moveLeft() {
+		if(moveProcess == true)return false;
 		moveProcess = true;
 		if(!container.toLeft(this)) {
 			moveProcess = false;
-			return;
+			return false;
 		}
 		setFrameX(frameX - 1);
 		SwingUtilities.invokeLater(new Thread() {
@@ -62,14 +63,15 @@ abstract public class Creature extends Tile {
 			Thread.sleep(speed);
 		}catch(Exception e) {e.printStackTrace();}
 		moveProcess = false;
+		return true;
 	}
 
-	void moveUp() {
-		if(moveProcess == true)return;
+	boolean moveUp() {
+		if(moveProcess == true)return false;
 		moveProcess = true;
 		if(!container.toUp(this)) {
 			moveProcess = false;
-			return;
+			return false;
 		}
 		setFrameY(frameY - 1);
 		SwingUtilities.invokeLater(new Thread() {
@@ -81,14 +83,15 @@ abstract public class Creature extends Tile {
 			Thread.sleep(speed);
 		}catch(Exception e) {e.printStackTrace();}
 		moveProcess = false;
+		return true;
 	}
 
-	void moveDown() {
-		if(moveProcess == true)return;
+	boolean moveDown() {
+		if(moveProcess == true)return false;
 		moveProcess = true;
 		if(!container.toDown(this)) {
 			moveProcess = false;
-			return;
+			return false;
 		}
 		setFrameY(frameY + 1);
 		SwingUtilities.invokeLater(new Thread() {
@@ -100,5 +103,6 @@ abstract public class Creature extends Tile {
 			Thread.sleep(speed);
 		}catch(Exception e) {e.printStackTrace();}
 		moveProcess = false;
+		return true;
 	}
 }
