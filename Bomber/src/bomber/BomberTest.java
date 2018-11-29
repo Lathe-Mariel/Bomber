@@ -37,13 +37,13 @@ public class BomberTest extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+
 		Field field0 = new Field();
 		contentPane.add(field0);
 		KeyEventHandler keyHandler = new KeyEventHandler();
 		field0.setKeyListener(keyHandler);
 		addKeyListener(keyHandler);
-		
+
 		field0.init1PC();
 	}
 

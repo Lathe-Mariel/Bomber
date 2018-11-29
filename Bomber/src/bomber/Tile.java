@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 public abstract class Tile extends Component {
+	Image imageArray[];
 	Image image;
 	int frameX, frameY;
 	/**

@@ -3,13 +3,20 @@ package bomber;
 import javax.swing.SwingUtilities;
 
 abstract public class Creature extends Tile {
+	boolean moveProcess;
+	/**
+	 * Moting interval time.
+	 */
+	int speed;
 
-	Creature(Field container) {
-		super(container);
-	}
+//	private Creature(Field container) {
+//		super(container);
+//	}
 
 	Creature(Field container, int x, int y) {
 		super(container, x, y);
+		speed = 200;
+		moveProcess = false;
 	}
 
 	/**
@@ -20,62 +27,78 @@ abstract public class Creature extends Tile {
 	abstract void contact();
 
 	void moveRight() {
-		Tile[][] tiles = container.getTileArray();
-		if (tiles[frameX + 1][frameY] != null && !tiles[frameX +1][frameY].stepOn(this)) {
+		if(moveProcess == true)return;
+		moveProcess = true;
+		if(!container.toRight(this)) {
+			moveProcess = false;
 			return;
 		}
-		tiles[frameX][frameY] = null;
-		setFrameX(frameX + 1);
-		tiles[frameX][frameY] = this;
+		setFrameX(frameX+1);
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {
 				container.repaint(50, 0, 0, 40, 40);
 			}
 		});
+		try {
+			Thread.sleep(speed);
+		}catch(Exception e) {e.printStackTrace();}
+		moveProcess = false;
 	}
 
 	void moveLeft() {
-		Tile[][] tiles = container.getTileArray();
-		if (tiles[frameX - 1][frameY] != null && !tiles[frameX -1][frameY].stepOn(this)) {
+		if(moveProcess == true)return;
+		moveProcess = true;
+		if(!container.toLeft(this)) {
+			moveProcess = false;
 			return;
 		}
-		tiles[frameX][frameY] = null;
 		setFrameX(frameX - 1);
-		tiles[frameX][frameY] = this;
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {
 				container.repaint(50, 0, 0, 40, 40);
 			}
 		});
+		try {
+			Thread.sleep(speed);
+		}catch(Exception e) {e.printStackTrace();}
+		moveProcess = false;
 	}
 
 	void moveUp() {
-		Tile[][] tiles = container.getTileArray();
-		if (tiles[frameX][frameY - 1] != null && !tiles[frameX][frameY-1].stepOn(this)) {
+		if(moveProcess == true)return;
+		moveProcess = true;
+		if(!container.toUp(this)) {
+			moveProcess = false;
 			return;
 		}
-		tiles[frameX][frameY] = null;
 		setFrameY(frameY - 1);
-		tiles[frameX][frameY] = this;
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {
 				container.repaint(50, 0, 0, 40, 40);
 			}
 		});
+		try {
+			Thread.sleep(speed);
+		}catch(Exception e) {e.printStackTrace();}
+		moveProcess = false;
 	}
 
 	void moveDown() {
-		Tile[][] tiles = container.getTileArray();
-		if (tiles[frameX][frameY + 1] != null && !tiles[frameX][frameY+1].stepOn(this)) {
+		if(moveProcess == true)return;
+		moveProcess = true;
+		if(!container.toDown(this)) {
+			moveProcess = false;
 			return;
 		}
-		tiles[frameX][frameY] = null;
 		setFrameY(frameY + 1);
-		tiles[frameX][frameY] = this;
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {
 				container.repaint(50, 0, 0, 40, 40);
 			}
 		});
+		try {
+			Thread.sleep(speed);
+		}catch(Exception e) {e.printStackTrace();}
+		moveProcess = false;
 	}
 }

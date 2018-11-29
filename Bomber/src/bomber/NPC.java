@@ -2,9 +2,15 @@ package bomber;
 
 public class NPC extends BomberMan implements Runnable{
 
-	NPC(Field container) {
-		super(container);
+NPC(Field container, int x, int y) {
+		super(container, x, y);
+		// TODO 自動生成されたコンストラクター・スタブ
 	}
+
+
+//	NPC(Field container) {
+//		super(container);
+//	}
 
 	@Override
 	public void run() {
