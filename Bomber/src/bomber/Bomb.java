@@ -8,7 +8,19 @@ import javax.imageio.ImageIO;
 
 public class Bomb extends Tile implements Runnable {
 	int power;
+	static private Image[] bombImageArray;
 
+	static {
+		try {
+			bombImageArray = new Image[2];
+			bombImageArray[1] = ImageIO.read(new File("bomb1.png"));
+			bombImageArray[0] = ImageIO.read(new File("bomb0.png"));
+			//			imageArray[2] = ImageIO.read(new File("cheetah-attacked.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	//	Bomb(Field container) {
 	//		super(container);
 	//		power = 1;
@@ -18,23 +30,16 @@ public class Bomb extends Tile implements Runnable {
 		super(container, x, y);
 		this.power = power;
 
-		try {
-			imageArray = new Image[2];
-			imageArray[1] = ImageIO.read(new File("bomb1.png"));
-			imageArray[0] = ImageIO.read(new File("bomb0.png"));
-			//			imageArray[2] = ImageIO.read(new File("cheetah-attacked.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 		// TODO 自動生成されたコンストラクター・スタブ
-		image = imageArray[1];
+		image = bombImageArray[1];
 	}
 
 	void explode() {
 		// exploding process
 
 		System.out.println("bomb explosion");
-		container.eraseTile(this);
+		container.remove(this);
 		repaint(50, 0, 0, 40, 40);
 	}
 
@@ -64,7 +69,7 @@ public class Bomb extends Tile implements Runnable {
 				System.out.println("Bomb -> run()");
 				e.printStackTrace();
 			}
-			image = imageArray[count % 2];
+			image = bombImageArray[count % 2];
 			repaint(50,0,0,40,40);
 
 		} while (count++ < 4);

@@ -1,20 +1,33 @@
 package bomber;
 
+import java.awt.Graphics;
 
 public class BrakableBlock extends Tile {
 	ItemTile item;
-	BrakableBlock(Field container){
-		super(container);
-		image = BomberUtility.generalImageArray[3];//kusa
+
+	BrakableBlock(Field container, int depX, int depY) {
+		super(container, depX, depY);
+
+		image = BomberUtility.generalImageArray[2];//kusa
 	}
+
 	void setItem(ItemTile item) {
 		this.item = item;
 	}
 
 	void fired() {
-
+		if (item == null) {
+			container.remove(this);
+		} else {
+			//add item on container, and dissapear myself.
+		}
 	}
+
 	boolean stepOn(Tile source) {
 		return false;
+	}
+
+	public void paint(Graphics g) {
+		g.drawImage(image, 0, 0, 40, 40, this);
 	}
 }

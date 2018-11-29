@@ -7,6 +7,18 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class PC extends BomberMan {
+	static private Image[] pcImageArray;
+	static {
+		try {
+			pcImageArray = new Image[7];
+			pcImageArray[0] = ImageIO.read(new File("usa.png"));
+			pcImageArray[1] = ImageIO.read(new File("dead-usa.png"));
+			//			imageArray[1] = ImageIO.read(new File("brick.png"));
+			//			imageArray[2] = ImageIO.read(new File("kusa.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	//	PC(Field container) {
 	//		this(container, 1, 1);
@@ -14,16 +26,8 @@ public class PC extends BomberMan {
 
 	PC(Field container, int x, int y) {
 		super(container, x, y);
-		try {
-			image = ImageIO.read(new File("usa.png"));
 
-			imageArray = new Image[7];
-			imageArray[0] = ImageIO.read(new File("dead-usa.png"));
-			//			imageArray[1] = ImageIO.read(new File("brick.png"));
-			//			imageArray[2] = ImageIO.read(new File("kusa.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		image = pcImageArray[0];
 	}
 
 	@Override
@@ -35,7 +39,7 @@ public class PC extends BomberMan {
 	@Override
 	void kill() {
 		// TODO 自動生成されたメソッド・スタブ
-		image = imageArray[0];
+		image = pcImageArray[1];
 		container.repaint(50, 0, 0, 40, 40);
 	}
 

@@ -1,21 +1,18 @@
 package bomber;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
 public class Cat extends Enemy {
+	static private Image []catImageArray;
 
-	//	Cat(Field container){
-	//		this(container, 1,1);
-	//	}
-
-	Cat(Field container, int x, int y) {
-		super(container, x, y);
-		alive = true;
+	static {
+		catImageArray = new Image[5];
 		try {
-			image = ImageIO.read(new File("neko.png"));
+			catImageArray[0] = ImageIO.read(new File("neko.png"));
 
 //			imageArray = new Image[7];
 //			imageArray[0] = ImageIO.read(new File("rock.png"));
@@ -24,6 +21,17 @@ public class Cat extends Enemy {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	//	Cat(Field container){
+	//		this(container, 1,1);
+	//	}
+
+	Cat(Field container, int x, int y) {
+		super(container, x, y);
+		alive = true;
+		
+		image = catImageArray[0];
 	}
 
 	@Override
@@ -55,7 +63,7 @@ public class Cat extends Enemy {
 			direction = (int) (Math.random() * 4);
 			succession = (int) (Math.random() * 3);
 
-			System.out.println("Cat movement->>    direction: " + direction + "    succession: " + succession);
+			//System.out.println("Cat movement->>    direction: " + direction + "    succession: " + succession);
 			do {
 				switch (direction) {
 				case 0:

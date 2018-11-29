@@ -7,20 +7,26 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Cheetah extends Cat {
+	static private Image[] cheetahImageArray;
+	
+	static {
+		try {
+			System.out.println("Cheetah image reading failed");
+			cheetahImageArray = new Image[2];
+			cheetahImageArray[0] = ImageIO.read(new File("cheetah1l.png"));
+			cheetahImageArray[1] = ImageIO.read(new File("cheetah1r.png"));
+			//			cheetahImageArray[2] = ImageIO.read(new File("cheetah-attacked.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	Cheetah(Field container, int x, int y) {
 		super(container, x, y);
 		speed = 400;
-		try {
-			imageArray = new Image[2];
-			imageArray[0] = ImageIO.read(new File("cheetah1l.png"));
-			imageArray[1] = ImageIO.read(new File("cheetah1r.png"));
-			//			imageArray[2] = ImageIO.read(new File("cheetah-attacked.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
 		// TODO 自動生成されたコンストラクター・スタブ
-		image = imageArray[0];
+		image = cheetahImageArray[0];
 	}
 
 	@Override
@@ -43,10 +49,10 @@ public class Cheetah extends Cat {
 			}else {
 			BomberMan target = container.getBomberMan((int) (Math.random() * container.getBomberManNumber()));
 			if (frameX > target.frameX) {
-				image = imageArray[0];
+				image = cheetahImageArray[0];
 				moveLeft();
 			} else if (frameX < target.frameX) {
-				image = imageArray[1];
+				image = cheetahImageArray[1];
 				moveRight();
 			} else {
 				distance = target.frameY - frameY;
