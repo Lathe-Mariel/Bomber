@@ -3,8 +3,8 @@ package bomber;
 import javax.swing.SwingUtilities;
 
 abstract class BomberMan extends Creature {
-	private int bombPower = 1;
-	private int bombNumber = 1;
+	private int bombPower = 3;
+	private int bombNumber = 3;
 	private int MAX_BOMB_NUMBER = 9;
 	private int MAX_BOMB_POWER = 9;
 	private Bomb newBomb;

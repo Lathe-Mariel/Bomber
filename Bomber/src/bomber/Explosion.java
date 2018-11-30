@@ -60,7 +60,8 @@ public class Explosion extends JComponent implements Runnable {
 		if (penetrate) {
 
 		} else {
-			tiles[frameX][frameY].fired();
+			if (tiles[frameX][frameY] != null)
+				tiles[frameX][frameY].fired();
 			for (int i = frameX - 1; i >= frameX - power; i--) {
 				if (tiles[i][frameY] instanceof Obstacle) {
 					break;
@@ -128,6 +129,7 @@ public class Explosion extends JComponent implements Runnable {
 			cx = fireL * 40 + 10;
 			cy = fireU * 40 + 10;
 			setBounds(x, y, width, height);
+			repaint();
 		}
 	}
 

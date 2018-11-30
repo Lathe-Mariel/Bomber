@@ -43,10 +43,10 @@ public class Bomb extends Tile implements Runnable {
 	}
 
 	synchronized void explode() {
+		if(isFired)return;
 		isFired = true;
-		// exploding process
-		System.out.println("bomb explosion");
-
+		container.removeTile(this);
+		
 		Explosion exp = new Explosion(power, frameX, frameY, container, penetrate);
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {
@@ -57,14 +57,17 @@ public class Bomb extends Tile implements Runnable {
 		container.revalidate();
 		container.repaint();
 		new Thread(exp).start();
-		container.removeTile(this);
 		owner.increaseBombNumber();
 	}
 
 	@Override
 	void fired() {
 		if(isFired)return;
-		explode();
+		new Thread() {
+			public void run() {
+				explode();
+			}
+		}.start();
 		// TODO 自動生成されたメソッド・スタブ
 
 		//process destory(killing thread is essential, because this thread is still alive)
