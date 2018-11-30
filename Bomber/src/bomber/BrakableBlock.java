@@ -17,7 +17,7 @@ public class BrakableBlock extends Tile {
 
 	void fired() {
 		if (item == null) {
-			container.remove(this);
+			container.removeTile(this);
 		} else {
 			//add item on container, and dissapear myself.
 		}

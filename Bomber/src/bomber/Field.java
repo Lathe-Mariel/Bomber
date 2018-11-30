@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class Field extends JPanel {
 	private Tile tileArray[][];
@@ -18,48 +19,76 @@ public class Field extends JPanel {
 	void setKeyListener(KeyEventHandler keyListener) {
 		this.keyListener = keyListener;
 	}
-
+	public boolean isOptimizedDrawingEnabled() {
+		return false;
+	}
+	
 	Field() {
 		setLayout(null);
 		tileArray = new Tile[21][17];
 		for (int i = 2; i < tileArray.length - 2; i++, i++) {
 			for (int j = 2; j < tileArray[i].length - 2; j++, j++) {
-				add(new Obstacle(this, i, j));
+				addTile(new Obstacle(this, i, j));
 			}
 		}
 		for (int i = 0; i < tileArray.length; i++) {
-			add(new Obstacle(this, i, 0));
-			add(new Obstacle(this, i, tileArray[0].length - 1));
+			addTile(new Obstacle(this, i, 0));
+			addTile(new Obstacle(this, i, tileArray[0].length - 1));
 		}
 		for (int i = 1; i < tileArray[0].length - 1; i++) {
-			add(new Obstacle(this, 0, i));
-			add(new Obstacle(this, tileArray.length - 1, i));
+			addTile(new Obstacle(this, 0, i));
+			addTile(new Obstacle(this, tileArray.length - 1, i));
 		}
 
 		bomberMans = new ArrayList<BomberMan>();
 	}
 
-	synchronized boolean add(Tile newTile) {
-		super.add(newTile);
+	synchronized boolean addTile(Tile newTile) {
 		if (tileArray[newTile.frameX][newTile.frameY] == null) {
+			if (!SwingUtilities.isEventDispatchThread()) {
+				try {
+					SwingUtilities.invokeAndWait(new Thread() {
+						public void run() {
+							add(newTile);
+						}
+					});
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				add(newTile);
+			}
 			tileArray[newTile.frameX][newTile.frameY] = newTile;
 			repaint(50, newTile.x, newTile.y, 40, 40);
 			return true;
 		}
 		return false;
 	}
-	
-	synchronized void remove(Tile source) {
-		remove(source);
+
+	synchronized void removeTile(Tile source) {
+		if(source == null)return;
+		try {
+			if(!SwingUtilities.isEventDispatchThread()) {
+			SwingUtilities.invokeAndWait(new Thread() {
+				public void run() {
+					remove(source);
+				}
+			});}else {
+				remove(source);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		tileArray[source.frameX][source.frameY] = null;
+		repaint(50,source.x, source.y,40,40);
 	}
 
-//	void disappear(BrakableBlock tile) {
-//		tileArray[tile.frameX][tile.frameY] = null;
-//		remove(tile);
-//	}
+	//	void disappear(BrakableBlock tile) {
+	//		tileArray[tile.frameX][tile.frameY] = null;
+	//		remove(tile);
+	//	}
 
-	synchronized Tile[][] getTileArray() {
+	Tile[][] getTileArray() {
 		return tileArray;
 	}
 
@@ -111,25 +140,24 @@ public class Field extends JPanel {
 		}
 	}
 
-
 	void init1PC() {
-		deployBricks(1);
+		deployBricks(50);
 		bomberMans.add(new PC(this, 1, 1));
 		keyListener.addPlayer((PC) bomberMans.get(0));
-		add(bomberMans.get(0));
+		addTile(bomberMans.get(0));
 		Cat enemy0 = new Cat(this, 19, 15);
-		add(enemy0);
+		addTile(enemy0);
 		new Thread(enemy0).start();
 		Cheetah enemy1 = new Cheetah(this, 19, 1);
-		add(enemy1);
+		addTile(enemy1);
 		new Thread(enemy1).start();
 	}
 
 	void deployBricks(int number) {
 		ArrayList<BrakableBlock> bricks = new ArrayList<BrakableBlock>();
 		for (int i = 0; i < number; i++) {
-			int depX = (int) (Math.random() * tileArray.length);
-			int depY = (int) (Math.random() * tileArray[0].length);
+			int depX = (int) (Math.random() * (tileArray.length-3))+1;
+			int depY = (int) (Math.random() * (tileArray[0].length-3))+1;
 			while (tileArray[depX][depY] != null) {
 				depX++;
 				if (depX >= tileArray.length - 1) {
@@ -139,11 +167,11 @@ public class Field extends JPanel {
 			}
 			bricks.add(new BrakableBlock(this, depX, depY));
 		}
-		
-		for(int i = 0; i < bricks.size(); i++) {
-			add(bricks.get(i));
-		}
 
+		for (int i = 0; i < bricks.size(); i++) {
+			addTile(bricks.get(i));
+		}
+		removeTile(tileArray[1][1]);
 	}
 
 	BomberMan getBomberMan(int index) {

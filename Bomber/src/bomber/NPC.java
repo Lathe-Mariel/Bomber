@@ -32,7 +32,7 @@ NPC(Field container, int x, int y) {
 	}
 
 	@Override
-	void kill() {
+	void kill(Creature source) {
 		// TODO 自動生成されたメソッド・スタブ
 
 	}

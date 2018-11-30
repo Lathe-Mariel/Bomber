@@ -1,5 +1,7 @@
 package bomber;
 
+import java.awt.Image;
+
 abstract public class Enemy extends Creature implements Runnable {
 //	Enemy(Field container){
 //		super(container);
@@ -12,9 +14,11 @@ abstract public class Enemy extends Creature implements Runnable {
 	@Override
 	boolean stepOn(Tile source) {
 		if (source instanceof BomberMan) {
-			((Creature) source).kill();
+			((Creature) source).kill((Creature)source);
 		}
 		return true;
 	}
+	
+	abstract Image getKillImage() ;
 
 }

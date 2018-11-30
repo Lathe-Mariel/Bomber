@@ -41,7 +41,14 @@ public abstract class Tile extends Component {
 	}
 
 	abstract void fired();
-
+/**
+ * This method has two functions.
+ * One is return value which refer to steppable.
+ * And the other is function which is called by Creature who can step on this tile.
+ * @param source	Source calls this method.
+ * If some functios is needed to triger by source who steps on this tile, you can describe the function in this method.
+ * @return	This boolean value stands for steppable or not.
+ */
 	abstract boolean stepOn(Tile source);
 
 	public void paint(Graphics g) {

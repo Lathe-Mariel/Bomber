@@ -5,9 +5,14 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.SwingUtilities;
 
 public class Bomb extends Tile implements Runnable {
 	int power;
+	/**
+	 * bomb may have two state, one is that can't penetrate bricks, and the other is that can penetrate bricks.
+	 */
+	boolean penetrate = false;
 	static private Image[] bombImageArray;
 
 	static {
@@ -20,7 +25,7 @@ public class Bomb extends Tile implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	//	Bomb(Field container) {
 	//		super(container);
 	//		power = 1;
@@ -29,24 +34,30 @@ public class Bomb extends Tile implements Runnable {
 	Bomb(Field container, int x, int y, int power) {
 		super(container, x, y);
 		this.power = power;
-
-		
 		// TODO 自動生成されたコンストラクター・スタブ
 		image = bombImageArray[1];
 	}
 
 	void explode() {
 		// exploding process
-
 		System.out.println("bomb explosion");
-		container.remove(this);
-		repaint(50, 0, 0, 40, 40);
+		
+		Explosion exp = new Explosion(power, frameX, frameY, container);
+		SwingUtilities.invokeLater(new Thread() {
+			public void run() {
+				container.add(exp);
+				container.setComponentZOrder(exp, 0);
+			}
+		});
+		container.revalidate();
+		container.repaint();
+		new Thread(exp).start();
+		container.removeTile(this);
 	}
 
 	@Override
 	void fired() {
 		explode();
-		
 		// TODO 自動生成されたメソッド・スタブ
 
 		//process destory(killing thread is essential, because this thread is still alive)
@@ -70,8 +81,7 @@ public class Bomb extends Tile implements Runnable {
 				e.printStackTrace();
 			}
 			image = bombImageArray[count % 2];
-			repaint(50,0,0,40,40);
-
+			repaint();
 		} while (count++ < 4);
 		explode();
 	}

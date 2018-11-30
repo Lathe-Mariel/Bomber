@@ -11,8 +11,9 @@ public class PC extends BomberMan {
 	static {
 		try {
 			pcImageArray = new Image[7];
-			pcImageArray[0] = ImageIO.read(new File("usa.png"));
-			pcImageArray[1] = ImageIO.read(new File("dead-usa.png"));
+			pcImageArray[0] = ImageIO.read(new File("usa-l.png"));
+			pcImageArray[1] = ImageIO.read(new File("usa-r.png"));
+			pcImageArray[2] = ImageIO.read(new File("dead-usa.png"));
 			//			imageArray[1] = ImageIO.read(new File("brick.png"));
 			//			imageArray[2] = ImageIO.read(new File("kusa.png"));
 		} catch (IOException e) {
@@ -27,7 +28,9 @@ public class PC extends BomberMan {
 	PC(Field container, int x, int y) {
 		super(container, x, y);
 
-		image = pcImageArray[0];
+		movingImage[0] = pcImageArray[0];
+		movingImage[1] = pcImageArray[1];
+		image = movingImage[1];
 	}
 
 	@Override
@@ -37,10 +40,11 @@ public class PC extends BomberMan {
 	}
 
 	@Override
-	void kill() {
+	void kill(Creature source) {
 		// TODO 自動生成されたメソッド・スタブ
-		image = pcImageArray[1];
+		image = pcImageArray[2];
 		container.repaint(50, 0, 0, 40, 40);
+
 	}
 
 	@Override

@@ -12,8 +12,8 @@ public class Cat extends Enemy {
 	static {
 		catImageArray = new Image[5];
 		try {
-			catImageArray[0] = ImageIO.read(new File("neko.png"));
-
+			catImageArray[0] = ImageIO.read(new File("neko-l.png"));
+			catImageArray[1] = ImageIO.read(new File("neko-r.png"));
 //			imageArray = new Image[7];
 //			imageArray[0] = ImageIO.read(new File("rock.png"));
 //			imageArray[1] = ImageIO.read(new File("brick.png"));
@@ -30,17 +30,24 @@ public class Cat extends Enemy {
 	Cat(Field container, int x, int y) {
 		super(container, x, y);
 		alive = true;
-		
-		image = catImageArray[0];
+
+		movingImage[0] = catImageArray[0];
+		movingImage[1] = catImageArray[1];
+		image = movingImage[0];
 	}
 
 	@Override
 	void fired() {
 		// TODO 自動生成されたメソッド・スタブ
+		System.out.println("Cat -> fired()");
 	}
 
 	@Override
-	void kill() {
+	Image getKillImage() {
+		return catImageArray[2];
+	}
+	@Override
+	void kill(Creature source) {
 		// TODO 自動生成されたメソッド・スタブ
 		//process of destorying myown
 		alive = false;
@@ -49,7 +56,6 @@ public class Cat extends Enemy {
 	@Override
 	void contact() {
 		// TODO 自動生成されたメソッド・スタブ
-
 	}
 
 	boolean alive;
