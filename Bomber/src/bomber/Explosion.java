@@ -10,11 +10,13 @@ import javax.swing.SwingUtilities;
 
 public class Explosion extends JComponent implements Runnable {
 	int power;
-	int frameX, frameY, x2, y2, center;
+	int frameX, frameY, cx, cy;
 	int x, y, width, height;
+	int fireL, fireR, fireU, fireD;
 	Field container;
 	Tile[][] tiles;
 	Explosion var;
+	boolean penetrate;
 
 	/**
 	 * This is only way to create instance of Explosion.
@@ -23,20 +25,10 @@ public class Explosion extends JComponent implements Runnable {
 	 * @param y	frameY of bomb which caused fire.
 	 * @param container	The Field which has all elements of this game.
 	 */
-	Explosion(int power, int x, int y, Field container) {
+	Explosion(int power, int x, int y, Field container, boolean penetrate) {
 		this.power = power;
 		this.frameX = x;
 		this.frameY = y;
-		System.out.println("frameX: " + frameX + "    frameY: " + frameY);
-		this.x = x * 40 - 40 * power;
-		this.y = y * 40 - 40 * power;
-		x2 = x * 40 + 40 * (power + 1);
-		y2 = y * 40 + 40 * (power + 1);
-		width = x2 - this.x;
-		height = y2 - this.y;
-		setLocation(this.x, this.y);
-		setSize(width, height);
-		center = power * 40 + 20;
 		this.container = container;
 		tiles = container.getTileArray();
 	}
@@ -59,28 +51,83 @@ public class Explosion extends JComponent implements Runnable {
 
 	public void paintComponent(Graphics g) {
 		g.setColor(new Color(255, 0, 0, 180));
-		g.fillRect(0, center - 10, x2, 20);
-		g.fillRect(center - 10, 0, 20, y2);
+		g.fillRoundRect(0, cy, width, 20, 5, 5);
+		g.fillRoundRect(cx, 0, 20, height, 5, 5);
+
 	}
 
 	private void surveyTiles() {
-		int i1 = frameX - power;
-		int j1 = frameY - power;
-		int i2 = frameX + power;
-		int j2 = frameY + power;
-		i1 = i1 < 1 ? 1 : i1;
-		j1 = j1 < 1 ? 1 : j1;
-		i2 = i2 > 19 ? 19 : i2;
-		j2 = j2 > 15 ? 15 : j2;
-		for (; i1 <= i2; i1++) {
-			if (tiles[i1][frameY] == null)
-				continue;
-			tiles[i1][frameY].fired();
-		}
-		for (; j1 <= j2; j1++) {
-			if (tiles[frameX][j1] == null)
-				continue;
-			tiles[frameX][j1].fired();
+		if (penetrate) {
+
+		} else {
+			tiles[frameX][frameY].fired();
+			for (int i = frameX - 1; i >= frameX - power; i--) {
+				if (tiles[i][frameY] instanceof Obstacle) {
+					break;
+				} else if (tiles[i][frameY] instanceof BrakableBlock) {
+					fireL++;
+					tiles[i][frameY].fired();
+					break;
+				} else {
+					if (tiles[i][frameY] != null) {
+						tiles[i][frameY].fired();
+					}
+					fireL++;
+				}
+			}
+
+			for (int i = frameX + 1; i <= frameX + power; i++) {
+				if (tiles[i][frameY] instanceof Obstacle) {
+					break;
+				} else if (tiles[i][frameY] instanceof BrakableBlock) {
+					fireR++;
+					tiles[i][frameY].fired();
+					break;
+				} else {
+					if (tiles[i][frameY] != null) {
+						tiles[i][frameY].fired();
+					}
+					fireR++;
+				}
+			}
+
+			for (int i = frameY - 1; i >= frameY - power; i--) {
+				if (tiles[frameX][i] instanceof Obstacle) {
+					break;
+				} else if (tiles[frameX][i] instanceof BrakableBlock) {
+					fireU++;
+					tiles[frameX][i].fired();
+					break;
+				} else {
+					if (tiles[frameX][i] != null) {
+						tiles[frameX][i].fired();
+					}
+					fireU++;
+				}
+			}
+
+			for (int i = frameY + 1; i <= frameY + power; i++) {
+				if (tiles[frameX][i] instanceof Obstacle) {
+					break;
+				} else if (tiles[frameX][i] instanceof BrakableBlock) {
+					fireD++;
+					tiles[frameX][i].fired();
+					break;
+				} else {
+					if (tiles[frameX][i] != null) {
+						tiles[frameX][i].fired();
+					}
+					fireD++;
+				}
+			}
+
+			x = 40 * (frameX - fireL);
+			width = 40 * (1 + fireL + fireR);
+			y = 40 * (frameY - fireU);
+			height = 40 * (1 + fireU + fireD);
+			cx = fireL * 40 + 10;
+			cy = fireU * 40 + 10;
+			setBounds(x, y, width, height);
 		}
 	}
 

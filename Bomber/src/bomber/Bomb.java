@@ -8,7 +8,9 @@ import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
 
 public class Bomb extends Tile implements Runnable {
+	BomberMan owner;
 	int power;
+	private boolean isFired;
 	/**
 	 * bomb may have two state, one is that can't penetrate bricks, and the other is that can penetrate bricks.
 	 */
@@ -31,18 +33,21 @@ public class Bomb extends Tile implements Runnable {
 	//		power = 1;
 	//		// TODO 自動生成されたコンストラクター・スタブ
 	//	}
-	Bomb(Field container, int x, int y, int power) {
+	Bomb(Field container, int x, int y, int power, BomberMan owner, boolean penetrate) {
 		super(container, x, y);
+		this.owner = owner;
 		this.power = power;
+		this.penetrate = penetrate;
 		// TODO 自動生成されたコンストラクター・スタブ
 		image = bombImageArray[1];
 	}
 
-	void explode() {
+	synchronized void explode() {
+		isFired = true;
 		// exploding process
 		System.out.println("bomb explosion");
-		
-		Explosion exp = new Explosion(power, frameX, frameY, container);
+
+		Explosion exp = new Explosion(power, frameX, frameY, container, penetrate);
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {
 				container.add(exp);
@@ -53,10 +58,12 @@ public class Bomb extends Tile implements Runnable {
 		container.repaint();
 		new Thread(exp).start();
 		container.removeTile(this);
+		owner.increaseBombNumber();
 	}
 
 	@Override
 	void fired() {
+		if(isFired)return;
 		explode();
 		// TODO 自動生成されたメソッド・スタブ
 

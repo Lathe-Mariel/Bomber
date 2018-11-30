@@ -8,9 +8,10 @@ abstract class BomberMan extends Creature {
 	private int MAX_BOMB_NUMBER = 9;
 	private int MAX_BOMB_POWER = 9;
 	private Bomb newBomb;
-	//	BomberMan(Field container){
-	//		super(container);
-	//	}
+	private int dispatchedBombNumber;
+	private boolean penetrater;
+
+
 
 	BomberMan(Field container, int x, int y) {
 		super(container, x, y);
@@ -34,7 +35,7 @@ abstract class BomberMan extends Creature {
 	@Override
 	void kill(Creature source) {
 		if (source instanceof Cheetah) {
-			PopUpWindow window = new PopUpWindow(frameX, frameY-30, container, ((Enemy) source).getKillImage());
+			PopUpWindow window = new PopUpWindow(frameX, frameY, container, ((Enemy) source).getKillImage());
 			SwingUtilities.invokeLater(new Thread() {
 				public void run() {
 					container.add(window);
@@ -44,16 +45,13 @@ abstract class BomberMan extends Creature {
 			container.revalidate();
 			container.repaint();
 			new Thread(window).start();
-			System.out.println("killed bomberman");
 		}
 	}
 
 	@Override
 	boolean stepOn(Tile source) {
 		if (source instanceof Enemy) {
-			System.out.println(0);
 			kill((Creature) source);
-			System.out.println(1);
 			return true;
 		}
 		if (newBomb == null)
@@ -61,12 +59,23 @@ abstract class BomberMan extends Creature {
 		return false;
 	}
 
+	private synchronized void decreaseBombNumber() {
+		dispatchedBombNumber++;
+	}
+
+	synchronized void increaseBombNumber() {
+		dispatchedBombNumber--;
+	}
+
 	void putOnBomb() {
 		//System.out.println("BomberMan -> putOnBomb()");
 		if (newBomb != null)
 			return;
-		newBomb = new Bomb(container, frameX, frameY, bombPower);
+		if (dispatchedBombNumber >= bombNumber)
+			return;
+		newBomb = new Bomb(container, frameX, frameY, bombPower, this, penetrater);
 		new Thread(newBomb).start();
+		decreaseBombNumber();
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {
 				container.add(newBomb);

@@ -1,7 +1,9 @@
 package bomber;
 
+import java.awt.AlphaComposite;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 
@@ -22,8 +24,8 @@ public class PopUpWindow extends JComponent implements Runnable{
 		height = 120;
 		this.frameX = x;
 		this.frameY = y;
-		this.x = x * 40;
-		this.y = y * 40;
+		this.x = x * 40-15;
+		this.y = y * 40-40;
 		setLocation(this.x, this.y);
 		setSize(width, height);
 		this.container = container;
@@ -47,6 +49,9 @@ public class PopUpWindow extends JComponent implements Runnable{
 	}
 
 	public void paintComponent(Graphics g) {
+		float alpha = 0.7f; 
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 		g.drawImage(image, 0, 0, width, height, this);
 	}
 
@@ -69,6 +74,6 @@ public class PopUpWindow extends JComponent implements Runnable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		container.repaint(200, x, y, width, height);
+		container.repaint(500, x, y, width, height);
 	}
 }
