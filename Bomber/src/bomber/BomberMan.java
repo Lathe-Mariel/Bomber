@@ -33,18 +33,19 @@ abstract class BomberMan extends Creature {
 
 	@Override
 	void kill(Creature source) {
-		System.out.println("cheetah");
-		PopUpWindow window = new PopUpWindow(frameX, frameY, container, ((Enemy) source).getKillImage());
-		SwingUtilities.invokeLater(new Thread() {
-			public void run() {
-				container.add(window);
-				container.setComponentZOrder(window, 0);
-			}
-		});
-		container.revalidate();
-		container.repaint();
-		new Thread(window).start();
-		System.out.println("killed bomberman");
+		if (source instanceof Cheetah) {
+			PopUpWindow window = new PopUpWindow(frameX, frameY-30, container, ((Enemy) source).getKillImage());
+			SwingUtilities.invokeLater(new Thread() {
+				public void run() {
+					container.add(window);
+					container.setComponentZOrder(window, 0);
+				}
+			});
+			container.revalidate();
+			container.repaint();
+			new Thread(window).start();
+			System.out.println("killed bomberman");
+		}
 	}
 
 	@Override
