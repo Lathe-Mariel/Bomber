@@ -16,7 +16,9 @@ abstract public class Creature extends Tile {
 	private Creature(Field container) {
 		super(container);
 	}
-	private Creature() {}
+
+	private Creature() {
+	}
 
 	Creature(Field container, int x, int y) {
 		super(container, x, y);
@@ -33,86 +35,74 @@ abstract public class Creature extends Tile {
 	abstract void contact();
 
 	boolean moveRight() {
-		if(moveProcess == true)return false;
-		moveProcess = true;
 		image = movingImage[1];
-		if(!container.toRight(this)) {
-repaint();
-			moveProcess = false;
+		if (!container.toRight(this)) {
+			repaint();
 			return false;
 		}
-		setFrameX(frameX+1);
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {
-				container.repaint(50, 0, 0,40, 40);
+				container.repaint(100, 0, 0, 40, 40);
 			}
 		});
 		try {
 			Thread.sleep(speed);
-		}catch(Exception e) {e.printStackTrace();}
-		moveProcess = false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return true;
 	}
 
 	boolean moveLeft() {
-		if(moveProcess == true)return false;
-		moveProcess = true;
 		image = movingImage[0];
-		if(!container.toLeft(this)) {
+		if (!container.toLeft(this)) {
 			repaint();
-			moveProcess = false;
 			return false;
 		}
-		setFrameX(frameX - 1);
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {
-				container.repaint(50, 0, 0, 40, 40);
+				container.repaint(100, 0, 0, 40, 40);
 			}
 		});
 		try {
 			Thread.sleep(speed);
-		}catch(Exception e) {e.printStackTrace();}
-		moveProcess = false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return true;
 	}
 
 	boolean moveUp() {
-		if(moveProcess == true)return false;
-		moveProcess = true;
-		if(!container.toUp(this)) {
-			moveProcess = false;
+		if (!container.toUp(this)) {
 			return false;
 		}
-		setFrameY(frameY - 1);
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {
-				container.repaint(50, 0, 0, 40, 40);
+				container.repaint(100, 0, 0, 40, 40);
 			}
 		});
 		try {
 			Thread.sleep(speed);
-		}catch(Exception e) {e.printStackTrace();}
-		moveProcess = false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return true;
 	}
 
 	boolean moveDown() {
-		if(moveProcess == true)return false;
-		moveProcess = true;
-		if(!container.toDown(this)) {
-			moveProcess = false;
+		if (!container.toDown(this)) {
 			return false;
 		}
-		setFrameY(frameY + 1);
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {
-				container.repaint(50, 0, 0, 40, 40);
+				container.repaint(100, 0, 0, 40, 40);
 			}
 		});
 		try {
 			Thread.sleep(speed);
-		}catch(Exception e) {e.printStackTrace();}
-		moveProcess = false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return true;
 	}
 }

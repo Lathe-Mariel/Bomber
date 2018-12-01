@@ -7,7 +7,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class PC extends BomberMan {
+	KeyEventHandler keyListener;
 	static private Image[] pcImageArray;
+	
 	static {
 		try {
 			pcImageArray = new Image[7];
@@ -33,6 +35,9 @@ public class PC extends BomberMan {
 		image = movingImage[1];
 	}
 
+	void setKeyListener(KeyEventHandler handler) {
+		this.keyListener = handler;
+	}
 	@Override
 	void fired() {
 		//process die
@@ -52,6 +57,23 @@ public class PC extends BomberMan {
 	void contact() {
 		// TODO 自動生成されたメソッド・スタブ
 
+	}
+	
+	void goRight() {
+		super.moveRight();
+		keyListener.nofityKeyProcessingEnd();
+	}
+	void goLeft() {
+		super.moveLeft();
+		keyListener.nofityKeyProcessingEnd();
+	}
+	void goUp() {
+		super.moveUp();
+		keyListener.nofityKeyProcessingEnd();
+	}
+	void goDown() {
+		super.moveDown();
+		keyListener.nofityKeyProcessingEnd();
 	}
 
 }

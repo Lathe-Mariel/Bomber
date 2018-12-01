@@ -117,6 +117,7 @@ public class Explosion extends JComponent implements Runnable {
 				} else {
 					if (tiles[i][frameY] != null) {
 						tiles[i][frameY].fired();
+						System.out.println("fire");
 					}
 					fireL++;
 				}
@@ -132,6 +133,7 @@ public class Explosion extends JComponent implements Runnable {
 				} else {
 					if (tiles[i][frameY] != null) {
 						tiles[i][frameY].fired();
+						System.out.println("fire");
 					}
 					fireR++;
 				}
@@ -147,6 +149,7 @@ public class Explosion extends JComponent implements Runnable {
 				} else {
 					if (tiles[frameX][i] != null) {
 						tiles[frameX][i].fired();
+						System.out.println("fire");
 					}
 					fireU++;
 				}
@@ -162,6 +165,7 @@ public class Explosion extends JComponent implements Runnable {
 				} else {
 					if (tiles[frameX][i] != null) {
 						tiles[frameX][i].fired();
+						System.out.println("fire");
 					}
 					fireD++;
 				}
@@ -189,7 +193,7 @@ public class Explosion extends JComponent implements Runnable {
 
 		var = this;
 		try {
-			SwingUtilities.invokeAndWait(new Thread() {
+			SwingUtilities.invokeLater(new Thread() {
 				public void run() {
 					container.remove(var);
 				}
@@ -197,6 +201,6 @@ public class Explosion extends JComponent implements Runnable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		container.repaint(100, this.x, this.y, width, height);
+		container.repaint(300, this.x, this.y, width, height);
 	}
 }

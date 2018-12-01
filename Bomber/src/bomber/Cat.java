@@ -39,7 +39,7 @@ public class Cat extends Enemy {
 	@Override
 	void fired() {
 		// TODO 自動生成されたメソッド・スタブ
-		System.out.println("Cat -> fired()");
+		//System.out.println("Cat -> fired()");
 	}
 
 	@Override

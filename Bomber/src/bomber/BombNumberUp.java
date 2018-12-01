@@ -30,7 +30,7 @@ public class BombNumberUp extends ItemTile {
 	boolean stepOn(Creature source) {
 		// TODO 自動生成されたメソッド・スタブ
 		if(source instanceof Enemy) {
-			return true;
+			return false;
 		}
 		Tile thisTile = this;
 		new Thread() {
@@ -39,6 +39,7 @@ public class BombNumberUp extends ItemTile {
 		}}.start();
 
 		((BomberMan) source).addBombNumber(1);
+		((BomberMan) source).addItem(this);
 		return true;
 	}
 

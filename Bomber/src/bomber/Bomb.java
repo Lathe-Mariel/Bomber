@@ -54,9 +54,9 @@ public class Bomb extends Tile implements Runnable {
 				container.setComponentZOrder(exp, 0);
 			}
 		});
-		container.revalidate();
-		container.repaint();
+		//container.revalidate();
 		new Thread(exp).start();
+		container.repaint(30);
 		owner.increaseBombNumber();
 	}
 

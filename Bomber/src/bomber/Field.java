@@ -45,9 +45,10 @@ public class Field extends JPanel {
 
 	synchronized boolean addTile(Tile newTile) {
 		if (tileArray[newTile.frameX][newTile.frameY] == null) {
+			tileArray[newTile.frameX][newTile.frameY] = newTile;
 			if (!SwingUtilities.isEventDispatchThread()) {
 				try {
-					SwingUtilities.invokeAndWait(new Thread() {
+					SwingUtilities.invokeLater(new Thread() {
 						public void run() {
 							add(newTile);
 						}
@@ -58,11 +59,13 @@ public class Field extends JPanel {
 			} else {
 				add(newTile);
 			}
-			tileArray[newTile.frameX][newTile.frameY] = newTile;
+			//System.out.println("addTile");
 			repaint(100, newTile.x, newTile.y, 40, 40);
 			return true;
-		}
-		return false;
+		}else {
+		System.out.println("frameX: " + newTile.frameX + "    frameY: " + newTile.frameY + "  not null");
+		System.out.println(tileArray[newTile.frameX][newTile.frameY].getClass());
+		return false;}
 	}
 
 	synchronized void removeTile(Tile source) {
@@ -98,6 +101,7 @@ public class Field extends JPanel {
 		if (tileArray[x][y] == null || tileArray[x][y].stepOn(source)) {
 			tileArray[x - 1][y] = null;
 			tileArray[x][y] = source;
+			source.setFrameX(x);
 			return true;
 		} else {
 			return false;
@@ -110,6 +114,7 @@ public class Field extends JPanel {
 		if (tileArray[x][y] == null || tileArray[x][y].stepOn(source)) {
 			tileArray[x + 1][y] = null;
 			tileArray[x][y] = source;
+			source.setFrameX(x);
 			return true;
 		} else {
 			return false;
@@ -122,6 +127,7 @@ public class Field extends JPanel {
 		if (tileArray[x][y] == null || tileArray[x][y].stepOn(source)) {
 			tileArray[x][y + 1] = null;
 			tileArray[x][y] = source;
+			source.setFrameY(y);
 			return true;
 		} else {
 			return false;
@@ -134,6 +140,7 @@ public class Field extends JPanel {
 		if (tileArray[x][y] == null || tileArray[x][y].stepOn(source)) {
 			tileArray[x][y - 1] = null;
 			tileArray[x][y] = source;
+			source.setFrameY(y);
 			return true;
 		} else {
 			return false;

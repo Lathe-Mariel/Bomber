@@ -1,5 +1,7 @@
 package bomber;
 
+import java.util.ArrayList;
+
 import javax.swing.SwingUtilities;
 
 abstract class BomberMan extends Creature {
@@ -10,11 +12,13 @@ abstract class BomberMan extends Creature {
 	private Bomb newBomb;
 	private int dispatchedBombNumber;
 	private boolean penetrater;
+	private ArrayList<ItemTile> achievement;
 
 
 
 	BomberMan(Field container, int x, int y) {
 		super(container, x, y);
+		achievement = new ArrayList<ItemTile>();
 	}
 
 	void addBombNumber(int number) {
@@ -31,6 +35,10 @@ abstract class BomberMan extends Creature {
 	@Override
 	void fired() {
 		System.out.println("BomberMan -> fired()");
+	}
+
+	void addItem(ItemTile item) {
+		achievement.add(item);
 	}
 
 	@Override
@@ -52,7 +60,7 @@ abstract class BomberMan extends Creature {
 	@Override
 	boolean stepOn(Creature source) {
 		if (source instanceof Enemy) {
-			kill((Creature) source);
+			kill(source);
 			return true;
 		}
 		if (newBomb == null)
@@ -65,10 +73,11 @@ abstract class BomberMan extends Creature {
 	}
 
 	synchronized void increaseBombNumber() {
+		newBomb = null;
 		dispatchedBombNumber--;
 	}
 
-	void putOnBomb() {
+	synchronized void putOnBomb() {
 		//System.out.println("BomberMan -> putOnBomb()");
 		if (newBomb != null)
 			return;
@@ -85,7 +94,7 @@ abstract class BomberMan extends Creature {
 	}
 
 	@Override
-	boolean moveLeft() {
+	synchronized boolean moveLeft() {
 		if (!super.moveLeft())
 			return false;
 		//		Tile[][] tile = container.getTileArray();
@@ -98,7 +107,7 @@ abstract class BomberMan extends Creature {
 	}
 
 	@Override
-	boolean moveDown() {
+	synchronized boolean moveDown() {
 		if (!super.moveDown())
 			return false;
 		//		Tile[][] tile = container.getTileArray();
@@ -111,7 +120,7 @@ abstract class BomberMan extends Creature {
 	}
 
 	@Override
-	boolean moveRight() {
+	synchronized boolean moveRight() {
 		if (!super.moveRight())
 			return false;
 		//		Tile[][] tile = container.getTileArray();
@@ -124,7 +133,7 @@ abstract class BomberMan extends Creature {
 	}
 
 	@Override
-	boolean moveUp() {
+	synchronized boolean moveUp() {
 		if (!super.moveUp())
 			return false;
 		//		Tile[][] tile = container.getTileArray();

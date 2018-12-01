@@ -38,15 +38,16 @@ public class FirePowerUp extends ItemTile {
 	boolean stepOn(Creature source) {
 		// TODO 自動生成されたメソッド・スタブ
 		if(source instanceof Enemy) {
-			return true;
+			return false;
 		}
 		Tile thisTile = this;
 		new Thread() {
 			public void run() {
 		container.removeTile(thisTile);
 		}}.start();
-		
+
 		((BomberMan) source).addBombPower(power);
+		((BomberMan) source).addItem(this);
 		return true;
 	}
 
