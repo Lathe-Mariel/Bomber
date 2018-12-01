@@ -26,7 +26,7 @@ NPC(Field container, int x, int y) {
 	}
 
 	@Override
-	boolean stepOn(Tile source) {
+	boolean stepOn(Creature source) {
 		// TODO 自動生成されたメソッド・スタブ
 		return false;
 	}

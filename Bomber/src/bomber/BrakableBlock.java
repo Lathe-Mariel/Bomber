@@ -13,17 +13,20 @@ public class BrakableBlock extends Tile {
 
 	void setItem(ItemTile item) {
 		this.item = item;
+		item.init(container, frameX, frameY);
 	}
 
 	void fired() {
 		if (item == null) {
 			container.removeTile(this);
 		} else {
+			container.removeTile(this);
+			container.addTile(item);
 			//add item on container, and dissapear myself.
 		}
 	}
 
-	boolean stepOn(Tile source) {
+	boolean stepOn(Creature source) {
 		return false;
 	}
 

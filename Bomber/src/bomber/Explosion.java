@@ -58,6 +58,51 @@ public class Explosion extends JComponent implements Runnable {
 
 	private void surveyTiles() {
 		if (penetrate) {
+			if (tiles[frameX][frameY] != null)
+				tiles[frameX][frameY].fired();
+			for (int i = frameX - 1; i >= frameX - power; i--) {
+				if (tiles[i][frameY] instanceof Obstacle) {
+					break;
+				} else {
+					if (tiles[i][frameY] != null) {
+						tiles[i][frameY].fired();
+					}
+					fireL++;
+				}
+			}
+
+			for (int i = frameX + 1; i <= frameX + power; i++) {
+				if (tiles[i][frameY] instanceof Obstacle) {
+					break;
+				} else {
+					if (tiles[i][frameY] != null) {
+						tiles[i][frameY].fired();
+					}
+					fireR++;
+				}
+			}
+
+			for (int i = frameY - 1; i >= frameY - power; i--) {
+				if (tiles[frameX][i] instanceof Obstacle) {
+					break;
+				} else {
+					if (tiles[frameX][i] != null) {
+						tiles[frameX][i].fired();
+					}
+					fireU++;
+				}
+			}
+
+			for (int i = frameY + 1; i <= frameY + power; i++) {
+				if (tiles[frameX][i] instanceof Obstacle) {
+					break;
+				} else {
+					if (tiles[frameX][i] != null) {
+						tiles[frameX][i].fired();
+					}
+					fireD++;
+				}
+			}
 
 		} else {
 			if (tiles[frameX][frameY] != null)
@@ -121,16 +166,15 @@ public class Explosion extends JComponent implements Runnable {
 					fireD++;
 				}
 			}
-
-			x = 40 * (frameX - fireL);
-			width = 40 * (1 + fireL + fireR);
-			y = 40 * (frameY - fireU);
-			height = 40 * (1 + fireU + fireD);
-			cx = fireL * 40 + 10;
-			cy = fireU * 40 + 10;
-			setBounds(x, y, width, height);
-			repaint();
 		}
+		x = 40 * (frameX - fireL);
+		width = 40 * (1 + fireL + fireR);
+		y = 40 * (frameY - fireU);
+		height = 40 * (1 + fireU + fireD);
+		cx = fireL * 40 + 10;
+		cy = fireU * 40 + 10;
+		setBounds(x, y, width, height);
+		repaint();
 	}
 
 	@Override

@@ -22,7 +22,7 @@ public class Field extends JPanel {
 	public boolean isOptimizedDrawingEnabled() {
 		return false;
 	}
-	
+
 	Field() {
 		setLayout(null);
 		tileArray = new Tile[21][17];
@@ -59,7 +59,7 @@ public class Field extends JPanel {
 				add(newTile);
 			}
 			tileArray[newTile.frameX][newTile.frameY] = newTile;
-			repaint(50, newTile.x, newTile.y, 40, 40);
+			repaint(100, newTile.x, newTile.y, 40, 40);
 			return true;
 		}
 		return false;
@@ -80,7 +80,7 @@ public class Field extends JPanel {
 			e.printStackTrace();
 		}
 		tileArray[source.frameX][source.frameY] = null;
-		repaint(50,source.x, source.y,40,40);
+		repaint(100,source.x, source.y,40,40);
 	}
 
 	//	void disappear(BrakableBlock tile) {
@@ -141,7 +141,7 @@ public class Field extends JPanel {
 	}
 
 	void init1PC() {
-		deployBricks(50);
+		deployBricks(85, 5, 7, 1);
 		bomberMans.add(new PC(this, 1, 1));
 		keyListener.addPlayer((PC) bomberMans.get(0));
 		addTile(bomberMans.get(0));
@@ -153,7 +153,7 @@ public class Field extends JPanel {
 		new Thread(enemy1).start();
 	}
 
-	void deployBricks(int number) {
+	void deployBricks(int number, int fireUp, int bombNumberUp, int FirePowerUp3) {
 		ArrayList<BrakableBlock> bricks = new ArrayList<BrakableBlock>();
 		for (int i = 0; i < number; i++) {
 			int depX = (int) (Math.random() * (tileArray.length-3))+1;
@@ -165,13 +165,33 @@ public class Field extends JPanel {
 					depY = depY >= tileArray[0].length ? 1 : depY + 1;
 				}
 			}
-			bricks.add(new BrakableBlock(this, depX, depY));
+			BrakableBlock block = new BrakableBlock(this, depX, depY);
+			bricks.add(block);
+			if(fireUp > 0) {
+				block.setItem(new FirePowerUp(1));
+				fireUp--;
+				continue;
+			}
+			if(bombNumberUp > 0) {
+				block.setItem(new BombNumberUp());
+				bombNumberUp--;
+				continue;
+			}
+			if(FirePowerUp3 > 0) {
+				block.setItem(new FirePowerUp(3));
+				FirePowerUp3--;
+				continue;
+			}
+
 		}
 
 		for (int i = 0; i < bricks.size(); i++) {
 			addTile(bricks.get(i));
 		}
 		removeTile(tileArray[1][1]);
+		removeTile(tileArray[2][1]);
+		removeTile(tileArray[1][2]);
+		removeTile(tileArray[19][15]);
 	}
 
 	BomberMan getBomberMan(int index) {

@@ -37,9 +37,9 @@ public class Cheetah extends Cat {
 		return cheetahImageArray[2];
 	}
 	@Override
-	boolean stepOn(Tile source) {
+	boolean stepOn(Creature source) {
 		boolean result = super.stepOn(source);
-		
+
 		return result;
 	}
 	@Override

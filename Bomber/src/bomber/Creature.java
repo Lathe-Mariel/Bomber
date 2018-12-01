@@ -13,16 +13,16 @@ abstract public class Creature extends Tile {
 	 */
 	int speed;
 
-//	private Creature(Field container) {
-//		super(container);
-//	}
+	private Creature(Field container) {
+		super(container);
+	}
+	private Creature() {}
 
 	Creature(Field container, int x, int y) {
 		super(container, x, y);
 		speed = 200;
 		moveProcess = false;
 		movingImage = new Image[5];
-
 	}
 
 	/**

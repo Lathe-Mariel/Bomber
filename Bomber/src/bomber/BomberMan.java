@@ -3,10 +3,10 @@ package bomber;
 import javax.swing.SwingUtilities;
 
 abstract class BomberMan extends Creature {
-	private int bombPower = 3;
-	private int bombNumber = 3;
-	private int MAX_BOMB_NUMBER = 9;
-	private int MAX_BOMB_POWER = 9;
+	private int bombPower = 1;
+	private int bombNumber = 1;
+	private int MAX_BOMB_NUMBER = 8;
+	private int MAX_BOMB_POWER = 8;
 	private Bomb newBomb;
 	private int dispatchedBombNumber;
 	private boolean penetrater;
@@ -19,12 +19,13 @@ abstract class BomberMan extends Creature {
 
 	void addBombNumber(int number) {
 		bombNumber += number;
-		bombNumber = bombNumber >= MAX_BOMB_NUMBER ? 9 : bombNumber;
+		bombNumber = bombNumber >= MAX_BOMB_NUMBER ? MAX_BOMB_NUMBER : bombNumber;
 	}
 
 	void addBombPower(int number) {
 		bombPower += number;
-		bombPower = bombPower >= MAX_BOMB_NUMBER ? 9 : bombNumber;
+		bombPower = bombPower >= MAX_BOMB_POWER ? MAX_BOMB_POWER : bombPower;
+		System.out.println("bombpower: " + bombPower);
 	}
 
 	@Override
@@ -49,7 +50,7 @@ abstract class BomberMan extends Creature {
 	}
 
 	@Override
-	boolean stepOn(Tile source) {
+	boolean stepOn(Creature source) {
 		if (source instanceof Enemy) {
 			kill((Creature) source);
 			return true;

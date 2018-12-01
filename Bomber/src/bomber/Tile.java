@@ -14,6 +14,10 @@ public abstract class Tile extends Component {
 	int x, y;
 	Field container;
 
+	Tile(){
+
+	}
+
 	Tile(Field container) {
 		this.container = container;
 		setSize(40, 40);
@@ -49,7 +53,7 @@ public abstract class Tile extends Component {
  * If some functios is needed to triger by source who steps on this tile, you can describe the function in this method.
  * @return	This boolean value stands for steppable or not.
  */
-	abstract boolean stepOn(Tile source);
+	abstract boolean stepOn(Creature source);
 
 	public void paint(Graphics g) {
 		g.drawImage(image, 0, 0, 40, 40, this);

@@ -46,7 +46,7 @@ public class Bomb extends Tile implements Runnable {
 		if(isFired)return;
 		isFired = true;
 		container.removeTile(this);
-		
+
 		Explosion exp = new Explosion(power, frameX, frameY, container, penetrate);
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {
@@ -74,7 +74,7 @@ public class Bomb extends Tile implements Runnable {
 	}
 
 	@Override
-	boolean stepOn(Tile source) {
+	boolean stepOn(Creature source) {
 		// TODO 自動生成されたメソッド・スタブ
 		return false;
 	}

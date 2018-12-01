@@ -12,7 +12,7 @@ abstract public class Enemy extends Creature implements Runnable {
 	}
 
 	@Override
-	boolean stepOn(Tile source) {
+	boolean stepOn(Creature source) {
 		if (source instanceof BomberMan) {
 			((Creature) source).kill((Creature)source);
 		}
