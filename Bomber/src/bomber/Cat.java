@@ -35,6 +35,7 @@ public class Cat extends Enemy {
 		movingImage[0] = catImageArray[0];
 		movingImage[1] = catImageArray[1];
 		image = movingImage[0];
+		deadImage = catImageArray[3];
 	}
 
 	@Override

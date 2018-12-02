@@ -56,7 +56,7 @@ abstract class BomberMan extends Creature {
 			container.repaint();
 			new Thread(window).start();
 		}
-		//container.death(this);
+		container.death(this);
 		
 	}
 
@@ -81,20 +81,20 @@ abstract class BomberMan extends Creature {
 	}
 
 	synchronized void putOnBomb() {
-		//System.out.println("BomberMan -> putOnBomb()");
 		if (newBomb != null)
 			return;
 		if (dispatchedBombNumber >= bombNumber)
 			return;
 		newBomb = new Bomb(container, frameX, frameY, bombPower, this, penetrater);
-		new Thread(newBomb).start();
-		decreaseBombNumber();
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {
 				container.add(newBomb);
+				//container.setComponentZOrder(newBomb, 5);
+				container.repaint(x, y, 40, 40);
 			}
 		});
-		repaint(100, x, y, 40, 40);
+		new Thread(newBomb).start();
+		decreaseBombNumber();
 	}
 
 	@Override

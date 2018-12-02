@@ -1,6 +1,7 @@
 package bomber;
 
 import java.awt.Dimension;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -59,7 +60,6 @@ public class Field extends JPanel {
 			} else {
 				add(newTile);
 			}
-			//System.out.println("addTile");
 			repaint(100, newTile.x, newTile.y, 40, 40);
 			return true;
 		}else {
@@ -83,7 +83,7 @@ public class Field extends JPanel {
 			e.printStackTrace();
 		}
 		tileArray[source.frameX][source.frameY] = null;
-		repaint(100,source.x, source.y,40,40);
+		repaint(150,source.x, source.y,40,40);
 	}
 
 	//	void disappear(BrakableBlock tile) {
@@ -148,30 +148,29 @@ public class Field extends JPanel {
 	}
 
 	void init1PC() {
-		deployBricks(85, 5, 7, 1);
 		bomberMans.add(new PC(this, 1, 1));
 		keyListener.addPlayer((PC) bomberMans.get(0));
 		addTile(bomberMans.get(0));
 		Cat enemy0 = new Cat(this, 19, 15);
 		addTile(enemy0);
-		new Thread(enemy0).start();
+		Cat enemy2 = new Cat(this, 19,10);
+		addTile(enemy2);
 		Cheetah enemy1 = new Cheetah(this, 19, 1);
 		addTile(enemy1);
+		
+		deployBricks(130, 5, 9, 1);
+		
+		new Thread(enemy0).start();
+		new Thread(enemy2).start();
 		new Thread(enemy1).start();
 	}
 
 	void deployBricks(int number, int fireUp, int bombNumberUp, int FirePowerUp3) {
 		ArrayList<BrakableBlock> bricks = new ArrayList<BrakableBlock>();
 		for (int i = 0; i < number; i++) {
-			int depX = (int) (Math.random() * (tileArray.length-3))+1;
-			int depY = (int) (Math.random() * (tileArray[0].length-3))+1;
-			while (tileArray[depX][depY] != null) {
-				depX++;
-				if (depX >= tileArray.length - 1) {
-					depX = 1;
-					depY = depY >= tileArray[0].length ? 1 : depY + 1;
-				}
-			}
+			int depX = (int) (Math.random() * (tileArray.length-2))+1;
+			int depY = (int) (Math.random() * (tileArray[0].length-2))+1;
+			
 			BrakableBlock block = new BrakableBlock(this, depX, depY);
 			bricks.add(block);
 			if(fireUp > 0) {
@@ -194,10 +193,17 @@ public class Field extends JPanel {
 		for (int i = 0; i < bricks.size(); i++) {
 			addTile(bricks.get(i));
 		}
-		removeTile(tileArray[1][1]);
-		removeTile(tileArray[2][1]);
-		removeTile(tileArray[1][2]);
-		removeTile(tileArray[19][15]);
+		Point[] emptyPoint = new Point[4];
+		emptyPoint[0] = new Point(1,2);
+		emptyPoint[1] = new Point(2,1);
+		emptyPoint[2] = new Point(18,15);
+		emptyPoint[3] = new Point(19,14);
+		for(int i =0; i < emptyPoint.length; i++) {
+			if(tileArray[emptyPoint[i].x][emptyPoint[i].y] != null ) {
+				removeTile(tileArray[emptyPoint[i].x][emptyPoint[i].y]);
+			}
+		}
+		
 	}
 
 	void death(Creature creature) {
@@ -209,6 +215,7 @@ public class Field extends JPanel {
 			pc = null;
 		}
 		if(bomberMans != null)
+		keyListener.removePlayer(pc);
 		bomberMans.remove(pc);
 	}
 	removeTile(creature);

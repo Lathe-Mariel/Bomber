@@ -1,10 +1,11 @@
 package bomber;
 
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
 
-public abstract class Tile extends Component {
+import javax.swing.JComponent;
+
+public abstract class Tile extends JComponent {
 	//Image imageArray[];
 	Image image;
 	int frameX, frameY;
@@ -14,7 +15,7 @@ public abstract class Tile extends Component {
 	int x, y;
 	Field container;
 
-	Tile(){
+	Tile() {
 
 	}
 
@@ -30,8 +31,13 @@ public abstract class Tile extends Component {
 		this.y = y * 40;
 		this.frameY = y;
 		setBounds(this.x, this.y, 40, 40);
+		setOpaque(false);
 	}
-
+/**
+ * This method sets frameX. frameX refers the X direction position in the Field.
+ * The tile positioin in the Field by dot will be set in this method.
+ * @param x	It should be set by frame unit.
+ */
 	void setFrameX(int x) {
 		frameX = x;
 		this.x = frameX * 40;
@@ -43,16 +49,19 @@ public abstract class Tile extends Component {
 		this.y = frameY * 40;
 		setLocation(x, this.y);
 	}
-
-	abstract void fired();
 /**
- * This method has two functions.
- * One is return value which refer to steppable.
- * And the other is function which is called by Creature who can step on this tile.
- * @param source	Source calls this method.
- * If some functios is needed to triger by source who steps on this tile, you can describe the function in this method.
- * @return	This boolean value stands for steppable or not.
+ * This method will be called, when this object got fire which caused by bombs.
  */
+	abstract void fired();
+
+	/**
+	 * This method has two functions.
+	 * One is return value which refer to steppable.
+	 * And the other is function which is called by Creature who can step on this tile.
+	 * @param source	Source calls this method.
+	 * If some functios is needed to triger by source who steps on this tile, you can describe the function in this method.
+	 * @return	This boolean value stands for steppable or not.
+	 */
 	abstract boolean stepOn(Creature source);
 
 	public void paint(Graphics g) {
