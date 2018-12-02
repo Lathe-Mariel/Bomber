@@ -20,5 +20,12 @@ abstract public class Enemy extends Creature implements Runnable {
 	}
 	
 	abstract Image getKillImage() ;
+	
+	
+	@Override
+	void fired() {
+		
+		kill(null);
+	}
 
 }

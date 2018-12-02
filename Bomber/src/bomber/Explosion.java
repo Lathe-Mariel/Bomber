@@ -17,6 +17,7 @@ public class Explosion extends JComponent implements Runnable {
 	Tile[][] tiles;
 	Explosion var;
 	boolean penetrate;
+	int hand_in_number1, hand_in_number2, hand_in_number3, hand_in_number4;
 
 	/**
 	 * This is only way to create instance of Explosion.
@@ -112,11 +113,16 @@ public class Explosion extends JComponent implements Runnable {
 					break;
 				} else if (tiles[i][frameY] instanceof BrakableBlock) {
 					fireL++;
-					tiles[i][frameY].fired();
+							tiles[i][frameY].fired();
 					break;
 				} else {
 					if (tiles[i][frameY] != null) {
-						tiles[i][frameY].fired();
+						hand_in_number1 = i;
+						new Thread() {
+							public void run() {
+								tiles[hand_in_number1][frameY].fired();
+							}
+						}.start();
 						System.out.println("fire");
 					}
 					fireL++;
@@ -128,12 +134,16 @@ public class Explosion extends JComponent implements Runnable {
 					break;
 				} else if (tiles[i][frameY] instanceof BrakableBlock) {
 					fireR++;
-					tiles[i][frameY].fired();
+							tiles[i][frameY].fired();
 					break;
 				} else {
 					if (tiles[i][frameY] != null) {
-						tiles[i][frameY].fired();
-						System.out.println("fire");
+						hand_in_number2 = i;
+						new Thread() {
+							public void run() {
+								tiles[hand_in_number2][frameY].fired();
+							}
+						}.start();
 					}
 					fireR++;
 				}
@@ -144,12 +154,16 @@ public class Explosion extends JComponent implements Runnable {
 					break;
 				} else if (tiles[frameX][i] instanceof BrakableBlock) {
 					fireU++;
-					tiles[frameX][i].fired();
+							tiles[frameX][i].fired();
 					break;
 				} else {
 					if (tiles[frameX][i] != null) {
-						tiles[frameX][i].fired();
-						System.out.println("fire");
+						hand_in_number3 = i;
+						new Thread() {
+							public void run() {
+								tiles[frameX][hand_in_number3].fired();
+							}
+						}.start();
 					}
 					fireU++;
 				}
@@ -160,12 +174,16 @@ public class Explosion extends JComponent implements Runnable {
 					break;
 				} else if (tiles[frameX][i] instanceof BrakableBlock) {
 					fireD++;
-					tiles[frameX][i].fired();
+							tiles[frameX][i].fired();
 					break;
 				} else {
 					if (tiles[frameX][i] != null) {
-						tiles[frameX][i].fired();
-						System.out.println("fire");
+						hand_in_number4 = i;
+						new Thread() {
+							public void run() {
+								tiles[frameX][hand_in_number4].fired();
+							}
+						}.start();
 					}
 					fireD++;
 				}

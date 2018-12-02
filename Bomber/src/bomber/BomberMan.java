@@ -43,6 +43,7 @@ abstract class BomberMan extends Creature {
 
 	@Override
 	void kill(Creature source) {
+		alive = false;
 		if (source instanceof Cheetah) {
 			PopUpWindow window = new PopUpWindow(frameX, frameY, container, ((Enemy) source).getKillImage());
 			SwingUtilities.invokeLater(new Thread() {
@@ -55,6 +56,8 @@ abstract class BomberMan extends Creature {
 			container.repaint();
 			new Thread(window).start();
 		}
+		//container.death(this);
+		
 	}
 
 	@Override
@@ -91,14 +94,13 @@ abstract class BomberMan extends Creature {
 				container.add(newBomb);
 			}
 		});
+		repaint(100, x, y, 40, 40);
 	}
 
 	@Override
 	synchronized boolean moveLeft() {
 		if (!super.moveLeft())
 			return false;
-		//		Tile[][] tile = container.getTileArray();
-		//		tile[frameX+1][frameY] = newBomb;
 		if (newBomb == null)
 			return true;
 		container.addTile(newBomb);
@@ -110,8 +112,6 @@ abstract class BomberMan extends Creature {
 	synchronized boolean moveDown() {
 		if (!super.moveDown())
 			return false;
-		//		Tile[][] tile = container.getTileArray();
-		//		tile[frameX][frameY-1] = newBomb;
 		if (newBomb == null)
 			return true;
 		container.addTile(newBomb);
@@ -123,8 +123,6 @@ abstract class BomberMan extends Creature {
 	synchronized boolean moveRight() {
 		if (!super.moveRight())
 			return false;
-		//		Tile[][] tile = container.getTileArray();
-		//		tile[frameX-1][frameY] = newBomb;
 		if (newBomb == null)
 			return true;
 		container.addTile(newBomb);
@@ -136,8 +134,6 @@ abstract class BomberMan extends Creature {
 	synchronized boolean moveUp() {
 		if (!super.moveUp())
 			return false;
-		//		Tile[][] tile = container.getTileArray();
-		//		tile[frameX][frameY+1] = newBomb;
 		if (newBomb == null)
 			return true;
 		container.addTile(newBomb);

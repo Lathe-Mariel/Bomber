@@ -1,5 +1,6 @@
 package bomber;
 
+import java.awt.Component;
 import java.awt.Image;
 
 import javax.swing.SwingUtilities;
@@ -7,6 +8,8 @@ import javax.swing.SwingUtilities;
 abstract public class Creature extends Tile {
 	boolean moveProcess;
 	Image movingImage[];
+	Image deadImage;
+	boolean alive;
 
 	/**
 	 * Moting interval time.
@@ -25,12 +28,35 @@ abstract public class Creature extends Tile {
 		speed = 200;
 		moveProcess = false;
 		movingImage = new Image[5];
+		alive = true;
+		deadImage = image;
 	}
 
 	/**
-	 * When this object contacts enemy, this method will be called by enemy(when enemy steps on) or oneself(when PC steps on).
+	 * When this object contacts enemy, this method will be called by enemy(when enemy steps on) or oneself(when PC steps on enemy).
 	 */
-	abstract void kill(Creature source);
+	void kill(Creature source) {
+		alive = false;
+		container.death(this);
+		image = deadImage;
+		Component c = this;
+		SwingUtilities.invokeLater(new Thread() {
+			public void run() {
+				container.add(c);
+			}
+		});
+		repaint();
+		try {
+			Thread.sleep(1500);
+		}catch(Exception e ) {e.printStackTrace();}
+		SwingUtilities.invokeLater(new Thread() {
+			public void run() {
+				container.remove(c);
+			}
+		});
+		container.repaint(300,x,y,40,40);
+		System.out.println(this.getClass() + "  killed");
+	}
 
 	abstract void contact();
 

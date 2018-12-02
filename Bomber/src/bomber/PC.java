@@ -40,6 +40,7 @@ public class PC extends BomberMan {
 	}
 	@Override
 	void fired() {
+		super.fired();
 		//process die
 		//container.disappear(this)
 	}
@@ -47,10 +48,10 @@ public class PC extends BomberMan {
 	@Override
 	void kill(Creature source) {
 		// TODO 自動生成されたメソッド・スタブ
-		super.kill(source);
 		image = pcImageArray[2];
 		container.repaint(50, 0, 0, 40, 40);
 
+		super.kill(source);
 	}
 
 	@Override

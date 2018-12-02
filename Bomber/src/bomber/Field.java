@@ -2,6 +2,7 @@ package bomber;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -10,7 +11,7 @@ public class Field extends JPanel {
 	private Tile tileArray[][];
 	private KeyEventHandler keyListener;
 	boolean tileArrayLocker;
-	private ArrayList<BomberMan> bomberMans;
+	private ArrayList<PC> bomberMans;
 
 	public Dimension getPreferredSize() {
 		return new Dimension(840, 680);
@@ -39,8 +40,7 @@ public class Field extends JPanel {
 			addTile(new Obstacle(this, 0, i));
 			addTile(new Obstacle(this, tileArray.length - 1, i));
 		}
-
-		bomberMans = new ArrayList<BomberMan>();
+		bomberMans = new ArrayList<PC>();
 	}
 
 	synchronized boolean addTile(Tile newTile) {
@@ -189,7 +189,6 @@ public class Field extends JPanel {
 				FirePowerUp3--;
 				continue;
 			}
-
 		}
 
 		for (int i = 0; i < bricks.size(); i++) {
@@ -199,6 +198,20 @@ public class Field extends JPanel {
 		removeTile(tileArray[2][1]);
 		removeTile(tileArray[1][2]);
 		removeTile(tileArray[19][15]);
+	}
+
+	void death(Creature creature) {
+	if(creature instanceof PC) {
+		PC pc=null;
+		for(Iterator<PC> i = bomberMans.iterator(); i.hasNext();) {
+			pc = i.next();
+			if(pc == creature) break;
+			pc = null;
+		}
+		if(bomberMans != null)
+		bomberMans.remove(pc);
+	}
+	removeTile(creature);
 	}
 
 	BomberMan getBomberMan(int index) {
