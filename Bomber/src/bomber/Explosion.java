@@ -51,10 +51,9 @@ public class Explosion extends JComponent implements Runnable {
 	}
 
 	public void paintComponent(Graphics g) {
-		g.setColor(new Color(255, 0, 0, 180));
+		g.setColor(new Color(255, 0, 0, 150));
 		g.fillRoundRect(0, cy, width, 20, 5, 5);
 		g.fillRoundRect(cx, 0, 20, height, 5, 5);
-
 	}
 
 	private void surveyTiles() {
@@ -123,7 +122,7 @@ public class Explosion extends JComponent implements Runnable {
 								tiles[hand_in_number1][frameY].fired();
 							}
 						}.start();
-						System.out.println("fire");
+						//System.out.println("fire");
 					}
 					fireL++;
 				}
@@ -211,7 +210,7 @@ public class Explosion extends JComponent implements Runnable {
 
 		var = this;
 		try {
-			SwingUtilities.invokeLater(new Thread() {
+			SwingUtilities.invokeAndWait(new Thread() {
 				public void run() {
 					container.remove(var);
 				}

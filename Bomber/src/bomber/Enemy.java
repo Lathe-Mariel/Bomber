@@ -24,7 +24,6 @@ abstract public class Enemy extends Creature implements Runnable {
 	
 	@Override
 	void fired() {
-		
 		kill(null);
 	}
 

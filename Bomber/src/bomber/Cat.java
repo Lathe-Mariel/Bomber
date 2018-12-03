@@ -62,15 +62,19 @@ public class Cat extends Enemy {
 				switch (direction) {
 				case 0:
 					moveLeft();
+					System.out.println("cat moves left");
 					break;
 				case 1:
 					moveDown();
+					System.out.println("cat moves down");
 					break;
 				case 2:
 					moveRight();
+					System.out.println("cat moves right");
 					break;
 				case 3:
 					moveUp();
+					System.out.println("cat moves up");
 					break;
 				default:
 					break;

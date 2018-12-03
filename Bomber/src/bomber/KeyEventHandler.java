@@ -7,6 +7,7 @@ import java.util.TimerTask;
 public class KeyEventHandler implements KeyListener {
 	private boolean keyState[];
 	private boolean doublePressLock;
+	private boolean doublePressLockP2;
 	private PC players[];
 	private boolean keyInputProcessing;
 
@@ -33,15 +34,21 @@ public class KeyEventHandler implements KeyListener {
 
 	private void keyPressHandler() {
 		if (keyState[4]) {
+			if (doublePressLock)
+				return;
 			new Thread() {
 				public void run() {
-					if (doublePressLock)
-						return;
 					doublePressLock = true;
 					players[0].putOnBomb();
 				}
 			}.start();
-		}
+	} else if (keyState[9]) {
+		if(doublePressLockP2)return;
+		new Thread() {
+			public void run() {
+				players[1].putOnBomb();
+			}
+		}.start();}
 	
 		if (keyInputProcessing)
 			return;
@@ -74,16 +81,34 @@ public class KeyEventHandler implements KeyListener {
 					players[0].goUp();
 				}
 			}.start();
-		} else if (keyState[9]) {
-
 		} else if (keyState[5]) {
-
+			keyInputProcessing = true;
+			new Thread() {
+				public void run() {
+					players[1].goLeft();
+				}
+			}.start();
 		} else if (keyState[6]) {
-
+			keyInputProcessing = true;
+			new Thread() {
+				public void run() {
+					players[1].goDown();
+				}
+			}.start();
 		} else if (keyState[7]) {
-
+			keyInputProcessing = true;
+			new Thread() {
+				public void run() {
+					players[1].goRight();
+				}
+			}.start();
 		} else if (keyState[8]) {
-
+			keyInputProcessing = true;
+			new Thread() {
+				public void run() {
+					players[1].goUp();
+				}
+			}.start();
 		} else {
 		}
 	}
@@ -107,6 +132,18 @@ public class KeyEventHandler implements KeyListener {
 			break;
 		case KeyEvent.VK_W:
 			keyState[3] = true;
+			break;
+		case KeyEvent.VK_NUMPAD4:
+			keyState[5] = true;
+			break;
+		case KeyEvent.VK_NUMPAD2:
+			keyState[6] = true;
+			break;
+		case KeyEvent.VK_NUMPAD6:
+			keyState[7] = true;
+			break;
+		case KeyEvent.VK_NUMPAD8:
+			keyState[8] = true;
 			break;
 		case KeyEvent.VK_NUMPAD5:
 			keyState[9] = true;
@@ -139,9 +176,21 @@ public class KeyEventHandler implements KeyListener {
 			keyState[3] = false;
 			doublePressLock = false;
 			break;
+		case KeyEvent.VK_NUMPAD4:
+			keyState[5] = false;
+			break;
+		case KeyEvent.VK_NUMPAD2:
+			keyState[6] = false;
+			break;
+		case KeyEvent.VK_NUMPAD6:
+			keyState[7] = false;
+			break;
+		case KeyEvent.VK_NUMPAD8:
+			keyState[8] = false;
+			break;
 		case KeyEvent.VK_NUMPAD5:
 			keyState[9] = false;
-			doublePressLock = false;
+			doublePressLockP2 = false;
 			break;
 		default:
 			break;

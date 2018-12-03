@@ -47,7 +47,7 @@ abstract public class Creature extends Tile {
 		});
 		repaint();
 		try {
-			Thread.sleep(1500);
+			Thread.sleep(1800);
 		}catch(Exception e ) {e.printStackTrace();}
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {

@@ -33,6 +33,7 @@ public class PC extends BomberMan {
 		movingImage[0] = pcImageArray[0];
 		movingImage[1] = pcImageArray[1];
 		image = movingImage[1];
+		deadImage = pcImageArray[2];
 	}
 
 	void setKeyListener(KeyEventHandler handler) {
@@ -43,15 +44,6 @@ public class PC extends BomberMan {
 		super.fired();
 		//process die
 		//container.disappear(this)
-	}
-
-	@Override
-	void kill(Creature source) {
-		// TODO 自動生成されたメソッド・スタブ
-		image = pcImageArray[2];
-		container.repaint(50, 0, 0, 40, 40);
-
-		super.kill(source);
 	}
 
 	@Override
