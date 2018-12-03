@@ -38,7 +38,6 @@ public class Cheetah extends Cat {
 void kill(Creature creature) {
 	target = null;
 	super.kill(null);
-	
 }
 	@Override
 	Image getKillImage() {
@@ -71,9 +70,11 @@ void kill(Creature creature) {
 						speed = 400;
 					} else if (distance > 0) {
 						distance--;
+						if(!alive)break;
 						moveDown();
 					} else if (distance < 0) {
 						distance++;
+						if(!alive)break;
 						moveUp();
 					}
 				} else {

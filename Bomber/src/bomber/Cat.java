@@ -61,20 +61,20 @@ public class Cat extends Enemy {
 			do {
 				switch (direction) {
 				case 0:
+					if(!alive)break;
 					moveLeft();
-					System.out.println("cat moves left");
 					break;
 				case 1:
+					if(!alive)break;
 					moveDown();
-					System.out.println("cat moves down");
 					break;
 				case 2:
+					if(!alive)break;
 					moveRight();
-					System.out.println("cat moves right");
 					break;
 				case 3:
+					if(!alive)break;
 					moveUp();
-					System.out.println("cat moves up");
 					break;
 				default:
 					break;

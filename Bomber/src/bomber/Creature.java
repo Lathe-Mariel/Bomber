@@ -35,7 +35,7 @@ abstract public class Creature extends Tile {
 	/**
 	 * When this object contacts enemy, this method will be called by enemy(when enemy steps on) or oneself(when PC steps on enemy).
 	 */
-	void kill(Creature source) {
+	synchronized void kill(Creature source) {
 		alive = false;
 		container.death(this);
 		image = deadImage;
@@ -60,7 +60,7 @@ abstract public class Creature extends Tile {
 
 	abstract void contact();
 
-	boolean moveRight() {
+	synchronized boolean moveRight() {
 		image = movingImage[1];
 		if (!container.toRight(this)) {
 			repaint();
@@ -79,7 +79,7 @@ abstract public class Creature extends Tile {
 		return true;
 	}
 
-	boolean moveLeft() {
+	synchronized boolean moveLeft() {
 		image = movingImage[0];
 		if (!container.toLeft(this)) {
 			repaint();
@@ -98,7 +98,7 @@ abstract public class Creature extends Tile {
 		return true;
 	}
 
-	boolean moveUp() {
+	synchronized boolean moveUp() {
 		if (!container.toUp(this)) {
 			return false;
 		}
@@ -115,7 +115,7 @@ abstract public class Creature extends Tile {
 		return true;
 	}
 
-	boolean moveDown() {
+	synchronized boolean moveDown() {
 		if (!container.toDown(this)) {
 			return false;
 		}

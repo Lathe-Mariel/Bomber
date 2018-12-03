@@ -149,20 +149,26 @@ public class Field extends JPanel {
 
 	void init1PC() {
 		bomberMans.add(new PC(this, 1, 1));
+		bomberMans.add(new PC(this, 19,15));
 		keyListener.addPlayer((PC) bomberMans.get(0));
+		keyListener.addPlayer((PC) bomberMans.get(1));
 		addTile(bomberMans.get(0));
-		Cat enemy0 = new Cat(this, 19, 15);
+		addTile(bomberMans.get(1));
+		Cat enemy0 = new Cat(this, 10, 15);
 		addTile(enemy0);
 		Cat enemy2 = new Cat(this, 19,10);
 		addTile(enemy2);
+		Cat enemy3 = new Cat(this,19,5);
+		addTile(enemy3);
 		Cheetah enemy1 = new Cheetah(this, 19, 1);
 		addTile(enemy1);
 		
-		deployBricks(130, 5, 9, 1);
+		deployBricks(140, 6, 9, 1);
 		
 		new Thread(enemy0).start();
 		new Thread(enemy2).start();
 		new Thread(enemy1).start();
+		new Thread(enemy3).start();
 	}
 
 	void deployBricks(int number, int fireUp, int bombNumberUp, int FirePowerUp3) {

@@ -10,6 +10,7 @@ public class KeyEventHandler implements KeyListener {
 	private boolean doublePressLockP2;
 	private PC players[];
 	private boolean keyInputProcessing;
+	private boolean keyInputProcessing2;
 
 	public KeyEventHandler() {
 		players = new PC[2];
@@ -28,31 +29,32 @@ public class KeyEventHandler implements KeyListener {
 
 	}
 
-	void nofityKeyProcessingEnd() {
-		keyInputProcessing = false;
+	void nofityKeyProcessingEnd(PC pc) {
+		if (pc == players[0])
+			keyInputProcessing = false;
+		if (pc == players[1])
+			keyInputProcessing2 = false;
 	}
 
 	private void keyPressHandler() {
 		if (keyState[4]) {
-			if (doublePressLock)
-				return;
+			if (!doublePressLock) {
 			new Thread() {
 				public void run() {
 					doublePressLock = true;
 					players[0].putOnBomb();
 				}
+			}.start();}
+		} else if (keyState[9]) {
+			if (!doublePressLockP2) {
+			new Thread() {
+				public void run() {
+					players[1].putOnBomb();
+				}
 			}.start();
-	} else if (keyState[9]) {
-		if(doublePressLockP2)return;
-		new Thread() {
-			public void run() {
-				players[1].putOnBomb();
-			}
-		}.start();}
-	
-		if (keyInputProcessing)
-			return;
+		}}
 
+		if (!keyInputProcessing) {
 		if (keyState[0]) {
 			keyInputProcessing = true;
 			new Thread() {
@@ -81,36 +83,38 @@ public class KeyEventHandler implements KeyListener {
 					players[0].goUp();
 				}
 			}.start();
-		} else if (keyState[5]) {
-			keyInputProcessing = true;
+		}}
+		if (!keyInputProcessing2 == true) {
+		if (keyState[5]) {
+			keyInputProcessing2 = true;
 			new Thread() {
 				public void run() {
 					players[1].goLeft();
 				}
 			}.start();
 		} else if (keyState[6]) {
-			keyInputProcessing = true;
+			keyInputProcessing2 = true;
 			new Thread() {
 				public void run() {
 					players[1].goDown();
 				}
 			}.start();
 		} else if (keyState[7]) {
-			keyInputProcessing = true;
+			keyInputProcessing2 = true;
 			new Thread() {
 				public void run() {
 					players[1].goRight();
 				}
 			}.start();
 		} else if (keyState[8]) {
-			keyInputProcessing = true;
+			keyInputProcessing2 = true;
 			new Thread() {
 				public void run() {
 					players[1].goUp();
 				}
 			}.start();
 		} else {
-		}
+		}}
 	}
 
 	@Override
@@ -209,9 +213,11 @@ public class KeyEventHandler implements KeyListener {
 		}
 		return false;
 	}
+
 	synchronized public void removePlayer(PC player) {
-		for(int i = 0; i< players.length; i++) {
-			if(players[i] == player)players[i] = null;
+		for (int i = 0; i < players.length; i++) {
+			if (players[i] == player)
+				players[i] = null;
 		}
 	}
 }

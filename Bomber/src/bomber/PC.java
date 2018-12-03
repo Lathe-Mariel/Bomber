@@ -54,19 +54,19 @@ public class PC extends BomberMan {
 	
 	void goRight() {
 		super.moveRight();
-		keyListener.nofityKeyProcessingEnd();
+		keyListener.nofityKeyProcessingEnd(this);
 	}
 	void goLeft() {
 		super.moveLeft();
-		keyListener.nofityKeyProcessingEnd();
+		keyListener.nofityKeyProcessingEnd(this);
 	}
 	void goUp() {
 		super.moveUp();
-		keyListener.nofityKeyProcessingEnd();
+		keyListener.nofityKeyProcessingEnd(this);
 	}
 	void goDown() {
 		super.moveDown();
-		keyListener.nofityKeyProcessingEnd();
+		keyListener.nofityKeyProcessingEnd(this);
 	}
 
 }

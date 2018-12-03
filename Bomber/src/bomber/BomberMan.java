@@ -43,7 +43,7 @@ abstract class BomberMan extends Creature {
 
 	@Override
 	void kill(Creature source) {
-		alive = false;
+		super.kill(source);
 		if (source instanceof Cheetah) {
 			PopUpWindow window = new PopUpWindow(frameX, frameY, container, ((Enemy) source).getKillImage());
 			SwingUtilities.invokeLater(new Thread() {
@@ -57,7 +57,6 @@ abstract class BomberMan extends Creature {
 			new Thread(window).start();
 		}
 		container.death(this);
-		
 	}
 
 	@Override
