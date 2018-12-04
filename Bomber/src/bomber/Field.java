@@ -162,6 +162,8 @@ public class Field extends JPanel {
 		addTile(enemy3);
 		Cheetah enemy1 = new Cheetah(this, 19, 1);
 		addTile(enemy1);
+		Suica enemy4 = new Suica(this, 10,1);
+		addTile(enemy4);
 		
 		deployBricks(140, 6, 9, 1);
 		
@@ -169,6 +171,7 @@ public class Field extends JPanel {
 		new Thread(enemy2).start();
 		new Thread(enemy1).start();
 		new Thread(enemy3).start();
+		new Thread(enemy4).start();
 	}
 
 	void deployBricks(int number, int fireUp, int bombNumberUp, int FirePowerUp3) {

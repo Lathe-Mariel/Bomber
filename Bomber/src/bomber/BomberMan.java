@@ -34,6 +34,7 @@ abstract class BomberMan extends Creature {
 
 	@Override
 	void fired() {
+		kill(null);
 		System.out.println("BomberMan -> fired()");
 	}
 
