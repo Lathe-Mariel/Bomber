@@ -28,6 +28,7 @@ public class Suica extends Enemy {
 		super(container, x, y);
 		// TODO 自動生成されたコンストラクター・スタブ
 		alive = true;
+		speed = 200;
 
 		movingImage[0] = suicaImageArray[0];
 		movingImage[1] = suicaImageArray[1];

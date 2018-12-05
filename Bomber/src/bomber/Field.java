@@ -63,8 +63,8 @@ public class Field extends JPanel {
 			repaint(100, newTile.x, newTile.y, 40, 40);
 			return true;
 		}else {
-		System.out.println("frameX: " + newTile.frameX + "    frameY: " + newTile.frameY + "  not null");
-		System.out.println(tileArray[newTile.frameX][newTile.frameY].getClass());
+		//System.out.println("frameX: " + newTile.frameX + "    frameY: " + newTile.frameY + "  not null");
+		//System.out.println(tileArray[newTile.frameX][newTile.frameY].getClass());
 		return false;}
 	}
 
@@ -164,9 +164,9 @@ public class Field extends JPanel {
 		addTile(enemy1);
 		Suica enemy4 = new Suica(this, 10,1);
 		addTile(enemy4);
-		
+
 		deployBricks(140, 6, 9, 1);
-		
+
 		new Thread(enemy0).start();
 		new Thread(enemy2).start();
 		new Thread(enemy1).start();
@@ -179,7 +179,7 @@ public class Field extends JPanel {
 		for (int i = 0; i < number; i++) {
 			int depX = (int) (Math.random() * (tileArray.length-2))+1;
 			int depY = (int) (Math.random() * (tileArray[0].length-2))+1;
-			
+
 			BrakableBlock block = new BrakableBlock(this, depX, depY);
 			bricks.add(block);
 			if(fireUp > 0) {
@@ -212,7 +212,7 @@ public class Field extends JPanel {
 				removeTile(tileArray[emptyPoint[i].x][emptyPoint[i].y]);
 			}
 		}
-		
+
 	}
 
 	void death(Creature creature) {
