@@ -10,11 +10,12 @@ public class Suica extends Enemy {
 	static private Image []suicaImageArray;
 
 	static {
-		suicaImageArray = new Image[5];
+		suicaImageArray = new Image[6];
 		try {
 			suicaImageArray[0] = ImageIO.read(new File("suica.png"));
 			suicaImageArray[1] = ImageIO.read(new File("suica.png"));
-			suicaImageArray[3] = ImageIO.read(new File("suica.png"));
+			//suicaImageArray[2] = ImageIO.read(new File("suica-dead.png"));
+			suicaImageArray[3] = ImageIO.read(new File("suica-dead.png"));
 //			imageArray = new Image[7];
 //			imageArray[0] = ImageIO.read(new File("rock.png"));
 //			imageArray[1] = ImageIO.read(new File("brick.png"));

@@ -63,7 +63,9 @@ abstract class BomberMan extends Creature {
 	@Override
 	boolean stepOn(Creature source) {
 		if (source instanceof Enemy) {
-			kill(source);
+			new Thread() {
+				public void run() {
+			kill(source);}}.start();
 			return true;
 		}
 		if (newBomb == null)
