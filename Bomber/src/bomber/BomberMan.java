@@ -14,8 +14,6 @@ abstract class BomberMan extends Creature {
 	private boolean penetrater;
 	private ArrayList<ItemTile> achievement;
 
-
-
 	BomberMan(Field container, int x, int y) {
 		super(container, x, y);
 		achievement = new ArrayList<ItemTile>();
@@ -41,7 +39,7 @@ abstract class BomberMan extends Creature {
 	void addItem(ItemTile item) {
 		achievement.add(item);
 	}
-
+	
 	@Override
 	void kill(Creature source) {
 		super.kill(source);
@@ -65,7 +63,9 @@ abstract class BomberMan extends Creature {
 		if (source instanceof Enemy) {
 			new Thread() {
 				public void run() {
-			kill(source);}}.start();
+					kill(source);
+				}
+			}.start();
 			return true;
 		}
 		if (newBomb == null)
@@ -80,6 +80,12 @@ abstract class BomberMan extends Creature {
 	synchronized void increaseBombNumber() {
 		newBomb = null;
 		dispatchedBombNumber--;
+	}
+/**
+ * after doing this method, bomb has power of penetration.
+ */
+	void setPenetration() {
+		this.penetrater = true;
 	}
 
 	synchronized void putOnBomb() {

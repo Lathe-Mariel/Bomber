@@ -7,7 +7,6 @@ public class BrakableBlock extends Tile {
 
 	BrakableBlock(Field container, int depX, int depY) {
 		super(container, depX, depY);
-
 		image = BomberUtility.generalImageArray[2];//kusa
 	}
 

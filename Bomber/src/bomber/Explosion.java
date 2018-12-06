@@ -25,6 +25,7 @@ public class Explosion extends JComponent implements Runnable {
 	 * @param x	frameX of bomb which caused fire.
 	 * @param y	frameY of bomb which caused fire.
 	 * @param container	The Field which has all elements of this game.
+	 * @param penetrate	Wheather a bomb have penetrate power or not.
 	 */
 	Explosion(int power, int x, int y, Field container, boolean penetrate) {
 		this.power = power;
@@ -32,6 +33,7 @@ public class Explosion extends JComponent implements Runnable {
 		this.frameY = y;
 		this.container = container;
 		tiles = container.getTileArray();
+		this.penetrate = penetrate;
 	}
 
 	public Rectangle getBounds() {
@@ -65,7 +67,16 @@ public class Explosion extends JComponent implements Runnable {
 					break;
 				} else {
 					if (tiles[i][frameY] != null) {
-						tiles[i][frameY].fired();
+						hand_in_number1 = i;
+						Thread t = new Thread() {
+							public void run() {
+								tiles[hand_in_number1][frameY].fired();
+							}
+						};
+						t.start();
+						try {
+						t.join(150);
+						}catch(Exception e) {e.printStackTrace();}
 					}
 					fireL++;
 				}
@@ -76,10 +87,18 @@ public class Explosion extends JComponent implements Runnable {
 					break;
 				} else {
 					if (tiles[i][frameY] != null) {
-						tiles[i][frameY].fired();
+						hand_in_number2 = i;
+						Thread t = new Thread() {
+							public void run() {
+								tiles[hand_in_number2][frameY].fired();
+							}
+						};
+						t.start();
+						try {
+							t.join();
+						}catch(Exception e) {e.printStackTrace();}
 					}
-					fireR++;
-				}
+				fireR++;}
 			}
 
 			for (int i = frameY - 1; i >= frameY - power; i--) {
@@ -87,7 +106,16 @@ public class Explosion extends JComponent implements Runnable {
 					break;
 				} else {
 					if (tiles[frameX][i] != null) {
-						tiles[frameX][i].fired();
+						hand_in_number3 = i;
+						Thread t = new Thread() {
+							public void run() {
+								tiles[frameX][hand_in_number3].fired();
+							}
+						};
+						t.start();
+						try {
+							t.join();
+						}catch(Exception e) {e.printStackTrace();}
 					}
 					fireU++;
 				}
@@ -98,7 +126,16 @@ public class Explosion extends JComponent implements Runnable {
 					break;
 				} else {
 					if (tiles[frameX][i] != null) {
-						tiles[frameX][i].fired();
+						hand_in_number4 = i;
+						Thread t = new Thread() {
+							public void run() {
+								tiles[frameX][hand_in_number4].fired();
+							}
+						};
+						t.start();
+						try {
+							t.join();
+						}catch(Exception e) {e.printStackTrace();}
 					}
 					fireD++;
 				}
@@ -112,7 +149,7 @@ public class Explosion extends JComponent implements Runnable {
 					break;
 				} else if (tiles[i][frameY] instanceof BrakableBlock) {
 					fireL++;
-							tiles[i][frameY].fired();
+					tiles[i][frameY].fired();
 					break;
 				} else {
 					if (tiles[i][frameY] != null) {
@@ -133,7 +170,7 @@ public class Explosion extends JComponent implements Runnable {
 					break;
 				} else if (tiles[i][frameY] instanceof BrakableBlock) {
 					fireR++;
-							tiles[i][frameY].fired();
+					tiles[i][frameY].fired();
 					break;
 				} else {
 					if (tiles[i][frameY] != null) {
@@ -153,7 +190,7 @@ public class Explosion extends JComponent implements Runnable {
 					break;
 				} else if (tiles[frameX][i] instanceof BrakableBlock) {
 					fireU++;
-							tiles[frameX][i].fired();
+					tiles[frameX][i].fired();
 					break;
 				} else {
 					if (tiles[frameX][i] != null) {
@@ -173,7 +210,7 @@ public class Explosion extends JComponent implements Runnable {
 					break;
 				} else if (tiles[frameX][i] instanceof BrakableBlock) {
 					fireD++;
-							tiles[frameX][i].fired();
+					tiles[frameX][i].fired();
 					break;
 				} else {
 					if (tiles[frameX][i] != null) {
