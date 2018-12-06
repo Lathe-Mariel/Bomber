@@ -142,8 +142,10 @@ public class Explosion extends JComponent implements Runnable {
 			}
 
 		} else {
-			if (tiles[frameX][frameY] != null)
+			if (tiles[frameX][frameY] !=null) {
 				tiles[frameX][frameY].fired();
+			System.out.println("fire");
+			}
 			for (int i = frameX - 1; i >= frameX - power; i--) {
 				if (tiles[i][frameY] instanceof Obstacle) {
 					break;

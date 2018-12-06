@@ -1,6 +1,7 @@
 package bomber;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.SwingUtilities;
 
@@ -32,14 +33,18 @@ abstract class BomberMan extends Creature {
 
 	@Override
 	void fired() {
-		kill(null);
+		new Thread() {
+			public void run() {
+				kill(null);
+			}
+		}.start();
 		System.out.println("BomberMan -> fired()");
 	}
 
 	void addItem(ItemTile item) {
 		achievement.add(item);
 	}
-	
+
 	@Override
 	void kill(Creature source) {
 		super.kill(source);
@@ -56,6 +61,26 @@ abstract class BomberMan extends Creature {
 			new Thread(window).start();
 		}
 		container.death(this);
+
+		new Thread() {
+			public void run() {
+				throwItems();
+			}
+		}.start();
+	}
+
+	private void throwItems() {
+		ItemTile it;
+		System.out.println("Items number: " + achievement.size());
+		for(Iterator<ItemTile> i = achievement.iterator(); i.hasNext(); ) {
+			it = i.next();
+			do {
+				int depX = (int) (Math.random() * 18)+1;
+				int depY = (int) (Math.random() * 15)+1;
+				it.setFrameX(depX);
+				it.setFrameY(depY);
+			}while(!container.addTile(it));
+		}
 	}
 
 	@Override
@@ -88,6 +113,11 @@ abstract class BomberMan extends Creature {
 		this.penetrater = true;
 	}
 
+	/**
+	 * This is the process of put on a new bomb on the field.
+	 * After created new bomb, it woun't put into the container.
+	 * After BomberMan moves to another place where is next to the spot where BomberMan created the bomb.
+	 */
 	synchronized void putOnBomb() {
 		if (newBomb != null)
 			return;
@@ -96,8 +126,7 @@ abstract class BomberMan extends Creature {
 		newBomb = new Bomb(container, frameX, frameY, bombPower, this, penetrater);
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {
-				container.add(newBomb);
-				//container.setComponentZOrder(newBomb, 5);
+				container.add(newBomb);// only appearance
 				container.repaint(x, y, 40, 40);
 			}
 		});
