@@ -30,6 +30,11 @@ abstract class BomberMan extends Creature {
 		bombPower = bombPower >= MAX_BOMB_POWER ? MAX_BOMB_POWER : bombPower;
 		System.out.println("bombpower: " + bombPower);
 	}
+	
+	void speedUp() {
+		speed -= 40;
+		speed = speed < 50?50:speed;
+	}
 
 	@Override
 	void fired() {

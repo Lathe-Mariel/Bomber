@@ -165,7 +165,7 @@ public class Field extends JPanel {
 		Suica enemy4 = new Suica(this, 10,1);
 		addTile(enemy4);
 
-		deployBricks(160, 6, 9, 1, 1);
+		deployBricks(160, 6, 9, 1, 1, 2);
 
 		new Thread(enemy0).start();
 		new Thread(enemy2).start();
@@ -174,7 +174,7 @@ public class Field extends JPanel {
 		new Thread(enemy4).start();
 	}
 
-	void deployBricks(int number, int fireUp, int bombNumberUp, int firePowerUp3, int penetrate) {
+	void deployBricks(int number, int fireUp, int bombNumberUp, int firePowerUp3, int penetrate, int speed) {
 		ArrayList<BrakableBlock> bricks = new ArrayList<BrakableBlock>();
 		for (int i = 0; i < number; i++) {
 			int depX = (int) (Math.random() * (tileArray.length-2))+1;
@@ -195,6 +195,11 @@ public class Field extends JPanel {
 			if(firePowerUp3 > 0) {
 				block.setItem(new FirePowerUp(3));
 				firePowerUp3--;
+				continue;
+			}
+			if(speed > 0) {
+				block.setItem(new SpeedUp());
+				speed--;
 				continue;
 			}
 			if(penetrate > 0) {

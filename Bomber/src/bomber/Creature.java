@@ -25,7 +25,7 @@ abstract public class Creature extends Tile {
 
 	Creature(Field container, int x, int y) {
 		super(container, x, y);
-		speed = 120;
+		speed = 200;
 		moveProcess = false;
 		movingImage = new Image[6];
 		alive = true;
