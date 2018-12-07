@@ -10,7 +10,7 @@ abstract class BomberMan extends Creature {
 	private int bombNumber = 1;
 	private int MAX_BOMB_NUMBER = 8;
 	private int MAX_BOMB_POWER = 8;
-	private Bomb newBomb;
+	Bomb newBomb;
 	private int dispatchedBombNumber;
 	private boolean penetrater;
 	private ArrayList<ItemTile> achievement;
@@ -149,7 +149,6 @@ abstract class BomberMan extends Creature {
 			return false;
 		if (newBomb == null)
 			return true;
-		container.addTile(newBomb);
 		newBomb = null;
 		return true;
 	}
@@ -160,7 +159,6 @@ abstract class BomberMan extends Creature {
 			return false;
 		if (newBomb == null)
 			return true;
-		container.addTile(newBomb);
 		newBomb = null;
 		return true;
 	}
@@ -171,7 +169,6 @@ abstract class BomberMan extends Creature {
 			return false;
 		if (newBomb == null)
 			return true;
-		container.addTile(newBomb);
 		newBomb = null;
 		return true;
 	}
@@ -182,7 +179,6 @@ abstract class BomberMan extends Creature {
 			return false;
 		if (newBomb == null)
 			return true;
-		container.addTile(newBomb);
 		newBomb = null;
 		return true;
 	}

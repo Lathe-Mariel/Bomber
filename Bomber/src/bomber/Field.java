@@ -43,7 +43,7 @@ public class Field extends JPanel {
 			addTile(new Obstacle(this, tileArray.length - 1, i));
 		}
 		bomberMans = new ArrayList<PC>();
-		
+
 		setBackground(new Color(220,220,140));
 	}
 
@@ -98,6 +98,12 @@ public class Field extends JPanel {
 		return tileArray;
 	}
 
+	private void setNewBomb(BomberMan bm) {
+		if(bm.newBomb != null) {
+			addTile(bm.newBomb);
+		}
+	}
+
 	synchronized boolean toRight(Creature source) {
 		int x = source.frameX + 1;
 		int y = source.frameY;
@@ -105,6 +111,8 @@ public class Field extends JPanel {
 			tileArray[x - 1][y] = null;
 			tileArray[x][y] = source;
 			source.setFrameX(x);
+			if(source instanceof BomberMan)
+				setNewBomb((BomberMan)source);
 			return true;
 		} else {
 			return false;
@@ -118,6 +126,8 @@ public class Field extends JPanel {
 			tileArray[x + 1][y] = null;
 			tileArray[x][y] = source;
 			source.setFrameX(x);
+			if(source instanceof BomberMan)
+				setNewBomb((BomberMan)source);
 			return true;
 		} else {
 			return false;
@@ -131,6 +141,8 @@ public class Field extends JPanel {
 			tileArray[x][y + 1] = null;
 			tileArray[x][y] = source;
 			source.setFrameY(y);
+			if(source instanceof BomberMan)
+				setNewBomb((BomberMan)source);
 			return true;
 		} else {
 			return false;
@@ -144,6 +156,8 @@ public class Field extends JPanel {
 			tileArray[x][y - 1] = null;
 			tileArray[x][y] = source;
 			source.setFrameY(y);
+			if(source instanceof BomberMan)
+				setNewBomb((BomberMan)source);
 			return true;
 		} else {
 			return false;
