@@ -85,10 +85,10 @@ abstract class BomberMan extends Creature {
 				it.setFrameX(depX);
 				it.setFrameY(depY);
 			}while(!container.addTile(it));
-			try {
-				Thread.sleep(1000);
-			}catch(Exception e) {}
 		}
+		try {
+			Thread.sleep(1000);
+		}catch(Exception e) {}
 		container.repaint();
 	}
 
