@@ -62,7 +62,7 @@ public class BomberTest extends JFrame {
 		field0.setKeyListener(keyHandler);
 		addKeyListener(keyHandler);
 
-		field0.init1PC();
+		field0.init2PC();
 		tb.startTimer();
 	}
 

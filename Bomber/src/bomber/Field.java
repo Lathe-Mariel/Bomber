@@ -1,5 +1,6 @@
 package bomber;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -42,6 +43,8 @@ public class Field extends JPanel {
 			addTile(new Obstacle(this, tileArray.length - 1, i));
 		}
 		bomberMans = new ArrayList<PC>();
+		
+		setBackground(new Color(220,220,140));
 	}
 
 	synchronized boolean addTile(Tile newTile) {
@@ -147,7 +150,7 @@ public class Field extends JPanel {
 		}
 	}
 
-	void init1PC() {
+	void init2PC() {
 		bomberMans.add(new PC(this, 1, 1));
 		bomberMans.add(new PC(this, 19,15));
 		keyListener.addPlayer((PC) bomberMans.get(0));
@@ -165,7 +168,7 @@ public class Field extends JPanel {
 		Suica enemy4 = new Suica(this, 10,1);
 		addTile(enemy4);
 
-		deployBricks(160, 6, 9, 1, 1, 2);
+		deployBricks(160, 6, 9, 1, 1, 4);
 
 		new Thread(enemy0).start();
 		new Thread(enemy2).start();
