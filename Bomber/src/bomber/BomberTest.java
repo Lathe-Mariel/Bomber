@@ -42,15 +42,18 @@ public class BomberTest extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+
 		JPanel northPanel = new JPanel();
 		northPanel.setPreferredSize(new Dimension(0,50));
-		
+
 		ImageIcon icon = null;
 		try {
 			icon = new ImageIcon(ImageIO.read(new File("neko-l.png")));
 		}catch(Exception e) {e.printStackTrace( );}
 		northPanel.add(new JLabel(icon));
+		
+		TimerLable tb = new TimerLable();
+		northPanel.add(tb);
 		contentPane.add(northPanel, BorderLayout.NORTH);
 		
 		Field field0 = new Field();
@@ -60,6 +63,7 @@ public class BomberTest extends JFrame {
 		addKeyListener(keyHandler);
 
 		field0.init1PC();
+		tb.startTimer();
 	}
 
 }

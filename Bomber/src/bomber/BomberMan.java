@@ -81,7 +81,7 @@ abstract class BomberMan extends Creature {
 			it = i.next();
 			do {
 				int depX = (int) (Math.random() * 18)+1;
-				int depY = (int) (Math.random() * 15)+1;
+				int depY = (int) (Math.random() * 14)+1;
 				it.setFrameX(depX);
 				it.setFrameY(depY);
 			}while(!container.addTile(it));
