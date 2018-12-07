@@ -39,14 +39,15 @@ public class KeyEventHandler implements KeyListener {
 	private void keyPressHandler() {
 		if (keyState[4]) {
 			if (!doublePressLock) {
+				doublePressLock = true;
 			new Thread() {
 				public void run() {
-					doublePressLock = true;
 					players[0].putOnBomb();
 				}
 			}.start();}
 		} else if (keyState[9]) {
 			if (!doublePressLockP2) {
+				doublePressLockP2 = true;
 			new Thread() {
 				public void run() {
 					players[1].putOnBomb();

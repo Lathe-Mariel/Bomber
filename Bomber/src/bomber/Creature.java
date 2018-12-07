@@ -40,21 +40,26 @@ abstract public class Creature extends Tile {
 		container.death(this);
 		image = deadImage;
 		Component c = this;
-		SwingUtilities.invokeLater(new Thread() {
+		new Thread() {
 			public void run() {
-				container.add(c);
+				SwingUtilities.invokeLater(new Thread() {
+					public void run() {
+						container.add(c);
+					}
+				});
+				repaint();
+				try {
+					Thread.sleep(1800);
+				}catch(Exception e ) {e.printStackTrace();}
+				SwingUtilities.invokeLater(new Thread() {
+					public void run() {
+						container.remove(c);
+					}
+				});
+				container.repaint(300,x,y,40,40);
 			}
-		});
-		repaint();
-		try {
-			Thread.sleep(1800);
-		}catch(Exception e ) {e.printStackTrace();}
-		SwingUtilities.invokeLater(new Thread() {
-			public void run() {
-				container.remove(c);
-			}
-		});
-		container.repaint(300,x,y,40,40);
+		}.start();
+		
 		System.out.println(this.getClass() + "  killed");
 	}
 
