@@ -168,7 +168,7 @@ public class Field extends JPanel {
 		Suica enemy4 = new Suica(this, 10,1);
 		addTile(enemy4);
 
-		deployBricks(160, 6, 9, 1, 1, 4);
+		deployBricks(160, 6, 9, 1, 1, 6);
 
 		new Thread(enemy0).start();
 		new Thread(enemy2).start();

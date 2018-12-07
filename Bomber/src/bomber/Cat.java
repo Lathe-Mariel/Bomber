@@ -33,8 +33,8 @@ public class Cat extends Enemy {
 	Cat(Field container, int x, int y) {
 		super(container, x, y);
 		alive = true;
-		
-		speed = 150;
+
+		speed = 200;
 
 		movingImage[0] = catImageArray[0];
 		movingImage[1] = catImageArray[1];
