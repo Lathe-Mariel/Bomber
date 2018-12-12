@@ -239,7 +239,6 @@ public class Explosion extends JComponent implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO 自動生成されたメソッド・スタブ
 		surveyTiles();
 		try {
 			Thread.sleep(600);
@@ -247,11 +246,11 @@ public class Explosion extends JComponent implements Runnable {
 			e.printStackTrace();
 		}
 
-		var = this;
+		//var = this;
 		try {
 			SwingUtilities.invokeAndWait(new Thread() {
 				public void run() {
-					container.remove(var);
+					container.remove(Explosion.this);
 				}
 			});
 		} catch (Exception e) {

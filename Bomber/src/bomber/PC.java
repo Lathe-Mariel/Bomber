@@ -52,7 +52,6 @@ public class PC extends BomberMan {
 
 	@Override
 	void contact() {
-		// TODO 自動生成されたメソッド・スタブ
 
 	}
 	

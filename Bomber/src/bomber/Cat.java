@@ -51,17 +51,15 @@ public class Cat extends Enemy {
 
 	@Override
 	void contact() {
-		// TODO 自動生成されたメソッド・スタブ
 	}
 
 	@Override
 	public void run() {
-		// TODO 自動生成されたメソッド・スタブ
 		int direction, succession;
 
 		while (alive) {
 			direction = (int) (Math.random() * 4);
-			succession = (int) (Math.random() * 3);
+			succession = (int) (Math.random() * 4);
 
 			//System.out.println("Cat movement->>    direction: " + direction + "    succession: " + succession);
 			do {

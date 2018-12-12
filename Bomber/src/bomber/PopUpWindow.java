@@ -57,18 +57,17 @@ public class PopUpWindow extends JComponent implements Runnable{
 
 	@Override
 	public void run() {
-		// TODO 自動生成されたメソッド・スタブ
 		try {
 			Thread.sleep(1200);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		var = this;
+		//var = this;
 		try {
 			SwingUtilities.invokeLater(new Thread() {
 				public void run() {
-					container.remove(var);
+					container.remove(PopUpWindow.this);
 				}
 			});
 		} catch (Exception e) {

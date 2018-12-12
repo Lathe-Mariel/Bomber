@@ -33,7 +33,6 @@ public class Bomb extends Tile implements Runnable {
 	//	Bomb(Field container) {
 	//		super(container);
 	//		power = 1;
-	//		// TODO 自動生成されたコンストラクター・スタブ
 	//	}
 	Bomb(Field container, int x, int y, int power, BomberMan owner, boolean penetrate) {
 		super(container, x, y);
@@ -76,20 +75,17 @@ public class Bomb extends Tile implements Runnable {
 				explode();
 			}
 		}.start();
-		// TODO 自動生成されたメソッド・スタブ
 
 		//process destory(killing thread is essential, because this thread is still alive)
 	}
 
 	@Override
 	boolean stepOn(Creature source) {
-		// TODO 自動生成されたメソッド・スタブ
 		return false;
 	}
 
 	@Override
 	public void run() {
-		// TODO 自動生成されたメソッド・スタブ
 		int count = 0;
 		do {
 			try {

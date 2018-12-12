@@ -29,8 +29,6 @@ public class Cheetah extends Cat {
 	Cheetah(Field container, int x, int y) {
 		super(container, x, y);
 		speed = 300;
-
-		// TODO 自動生成されたコンストラクター・スタブ
 		movingImage[0] = cheetahImageArray[0];
 		movingImage[1] = cheetahImageArray[1];
 		movingImage[4] = cheetahImageArray[4];

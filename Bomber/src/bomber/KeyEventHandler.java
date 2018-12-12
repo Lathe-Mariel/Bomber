@@ -25,7 +25,6 @@ public class KeyEventHandler implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO 自動生成されたメソッド・スタブ
 
 	}
 
@@ -120,7 +119,6 @@ public class KeyEventHandler implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO 自動生成されたメソッド・スタブ
 		int key = e.getKeyCode();
 		switch (key) {
 		case KeyEvent.VK_S:
@@ -160,7 +158,7 @@ public class KeyEventHandler implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO 自動生成されたメソッド・スタブ
+		// TODO 閾ｪ蜍慕函謌舌＆繧後◆繝｡繧ｽ繝�繝峨�ｻ繧ｹ繧ｿ繝�
 		int key = e.getKeyCode();
 		switch (key) {
 		case KeyEvent.VK_S:
