@@ -16,6 +16,8 @@ public class PC extends BomberMan {
 			pcImageArray[0] = ImageIO.read(new File("usa-l.png"));
 			pcImageArray[1] = ImageIO.read(new File("usa-r.png"));
 			pcImageArray[2] = ImageIO.read(new File("dead-usa.png"));
+			pcImageArray[4] =ImageIO.read(new File("usa-m-l.png"));
+			pcImageArray[5] =ImageIO.read(new File("usa-m-r.png"));
 			//			imageArray[1] = ImageIO.read(new File("brick.png"));
 			//			imageArray[2] = ImageIO.read(new File("kusa.png"));
 		} catch (IOException e) {
@@ -32,6 +34,8 @@ public class PC extends BomberMan {
 
 		movingImage[0] = pcImageArray[0];
 		movingImage[1] = pcImageArray[1];
+		movingImage[4] = pcImageArray[4];
+		movingImage[5] = pcImageArray[5];
 		image = movingImage[1];
 		deadImage = pcImageArray[2];
 	}
@@ -48,7 +52,6 @@ public class PC extends BomberMan {
 
 	@Override
 	void contact() {
-		// TODO 自動生成されたメソッド・スタブ
 
 	}
 	

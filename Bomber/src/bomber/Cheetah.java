@@ -12,11 +12,13 @@ public class Cheetah extends Cat {
 
 	static {
 		try {
-			cheetahImageArray = new Image[4];
+			cheetahImageArray = new Image[6];
 			cheetahImageArray[0] = ImageIO.read(new File("cheetah1l.png"));
 			cheetahImageArray[1] = ImageIO.read(new File("cheetah1r.png"));
 			cheetahImageArray[2] = ImageIO.read(new File("cheetah-win.png"));
 			cheetahImageArray[3] = ImageIO.read(new File("cheetah-dead.png"));
+			cheetahImageArray[4] = ImageIO.read(new File("cheetah1l.png"));
+			cheetahImageArray[5] = ImageIO.read(new File("cheetah1r.png"));
 			//			cheetahImageArray[2] = ImageIO.read(new File("cheetah-attacked.png"));
 		} catch (IOException e) {
 			System.out.println("Cheetah image reading failed");
@@ -26,11 +28,11 @@ public class Cheetah extends Cat {
 
 	Cheetah(Field container, int x, int y) {
 		super(container, x, y);
-		speed = 400;
-
-		// TODO 自動生成されたコンストラクター・スタブ
+		speed = 300;
 		movingImage[0] = cheetahImageArray[0];
 		movingImage[1] = cheetahImageArray[1];
+		movingImage[4] = cheetahImageArray[4];
+		movingImage[5] = cheetahImageArray[5];
 		image = movingImage[0];
 		deadImage = cheetahImageArray[3];
 	}

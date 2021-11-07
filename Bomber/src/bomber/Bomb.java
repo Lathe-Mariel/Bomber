@@ -11,6 +11,8 @@ public class Bomb extends Tile implements Runnable {
 	BomberMan owner;
 	int power;
 	private boolean isFired;
+	Bomb thisObject;
+
 	/**
 	 * bomb may have two state, one is that can't penetrate bricks, and the other is that can penetrate bricks.
 	 */
@@ -31,27 +33,31 @@ public class Bomb extends Tile implements Runnable {
 	//	Bomb(Field container) {
 	//		super(container);
 	//		power = 1;
-	//		// TODO 自動生成されたコンストラクター・スタブ
 	//	}
 	Bomb(Field container, int x, int y, int power, BomberMan owner, boolean penetrate) {
 		super(container, x, y);
 		this.owner = owner;
 		this.power = power;
 		this.penetrate = penetrate;
-		// TODO 自動生成されたコンストラクター・スタブ
 		image = bombImageArray[1];
 	}
 
 	synchronized void explode() {
-		if(isFired)return;
+		if (isFired)
+			return;
 		isFired = true;
-		container.removeTile(this);
+		if (owner.getX() != getX() || owner.getY() != getY()) {
+			container.removeTile(this);
+		} else {
+			thisObject = this;
+		}
 
 		Explosion exp = new Explosion(power, frameX, frameY, container, penetrate);
 		SwingUtilities.invokeLater(new Thread() {
 			public void run() {
 				container.add(exp);
 				container.setComponentZOrder(exp, 0);
+				if(thisObject != null)container.remove(thisObject);
 			}
 		});
 		//container.revalidate();
@@ -62,26 +68,24 @@ public class Bomb extends Tile implements Runnable {
 
 	@Override
 	void fired() {
-		if(isFired)return;
+		if (isFired)
+			return;
 		new Thread() {
 			public void run() {
 				explode();
 			}
 		}.start();
-		// TODO 自動生成されたメソッド・スタブ
 
 		//process destory(killing thread is essential, because this thread is still alive)
 	}
 
 	@Override
 	boolean stepOn(Creature source) {
-		// TODO 自動生成されたメソッド・スタブ
 		return false;
 	}
 
 	@Override
 	public void run() {
-		// TODO 自動生成されたメソッド・スタブ
 		int count = 0;
 		do {
 			try {

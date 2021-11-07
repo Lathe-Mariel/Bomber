@@ -27,7 +27,7 @@ abstract public class Creature extends Tile {
 		super(container, x, y);
 		speed = 200;
 		moveProcess = false;
-		movingImage = new Image[5];
+		movingImage = new Image[6];
 		alive = true;
 		deadImage = image;
 	}
@@ -40,21 +40,26 @@ abstract public class Creature extends Tile {
 		container.death(this);
 		image = deadImage;
 		Component c = this;
-		SwingUtilities.invokeLater(new Thread() {
+		new Thread() {
 			public void run() {
-				container.add(c);
+				SwingUtilities.invokeLater(new Thread() {
+					public void run() {
+						container.add(c);
+					}
+				});
+				repaint();
+				try {
+					Thread.sleep(1800);
+				}catch(Exception e ) {e.printStackTrace();}
+				SwingUtilities.invokeLater(new Thread() {
+					public void run() {
+						container.remove(c);
+					}
+				});
+				container.repaint(300,x,y,40,40);
 			}
-		});
-		repaint();
-		try {
-			Thread.sleep(1800);
-		}catch(Exception e ) {e.printStackTrace();}
-		SwingUtilities.invokeLater(new Thread() {
-			public void run() {
-				container.remove(c);
-			}
-		});
-		container.repaint(300,x,y,40,40);
+		}.start();
+		
 		System.out.println(this.getClass() + "  killed");
 	}
 
@@ -66,11 +71,18 @@ abstract public class Creature extends Tile {
 			repaint();
 			return false;
 		}
-		SwingUtilities.invokeLater(new Thread() {
-			public void run() {
-				container.repaint(100, 0, 0, 40, 40);
-			}
-		});
+		image = movingImage[5];
+		setLocation(x-20,y);
+//		SwingUtilities.invokeLater(new Thread() {
+//			public void run() {
+//				setLocation(x-20,y);
+//				//container.repaint(100, 0, 0, 40, 40);
+//			}
+//		});
+		try {Thread.sleep(speed);
+		}catch(Exception e) {e.printStackTrace();}
+		image = movingImage[1];
+		setLocation(x,y);
 		try {
 			Thread.sleep(speed);
 		} catch (Exception e) {
@@ -85,11 +97,17 @@ abstract public class Creature extends Tile {
 			repaint();
 			return false;
 		}
-		SwingUtilities.invokeLater(new Thread() {
-			public void run() {
-				container.repaint(100, 0, 0, 40, 40);
-			}
-		});
+		image = movingImage[4];
+		setLocation(x+20,y);
+		try {Thread.sleep(speed);
+		}catch(Exception e) {e.printStackTrace();}
+		image = movingImage[0];
+		setLocation(x,y);
+//		SwingUtilities.invokeLater(new Thread() {
+//			public void run() {
+//				container.repaint(100, 0, 0, 40, 40);
+//			}
+//		});
 		try {
 			Thread.sleep(speed);
 		} catch (Exception e) {
@@ -102,11 +120,15 @@ abstract public class Creature extends Tile {
 		if (!container.toUp(this)) {
 			return false;
 		}
-		SwingUtilities.invokeLater(new Thread() {
-			public void run() {
-				container.repaint(100, 0, 0, 40, 40);
-			}
-		});
+		setLocation(x,y+20);
+		try {Thread.sleep(speed);
+		}catch(Exception e) {e.printStackTrace();}
+		setLocation(x,y);
+//		SwingUtilities.invokeLater(new Thread() {
+//			public void run() {
+//				container.repaint(100, 0, 0, 40, 40);
+//			}
+//		});
 		try {
 			Thread.sleep(speed);
 		} catch (Exception e) {
@@ -119,11 +141,15 @@ abstract public class Creature extends Tile {
 		if (!container.toDown(this)) {
 			return false;
 		}
-		SwingUtilities.invokeLater(new Thread() {
-			public void run() {
-				container.repaint(100, 0, 0, 40, 40);
-			}
-		});
+		setLocation(x,y-20);
+		try {Thread.sleep(speed);
+		}catch(Exception e) {e.printStackTrace();}
+		setLocation(x,y);
+//		SwingUtilities.invokeLater(new Thread() {
+//			public void run() {
+//				container.repaint(100, 0, 0, 40, 40);
+//			}
+//		});
 		try {
 			Thread.sleep(speed);
 		} catch (Exception e) {

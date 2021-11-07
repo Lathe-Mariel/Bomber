@@ -1,5 +1,6 @@
 package bomber;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -42,6 +43,8 @@ public class Field extends JPanel {
 			addTile(new Obstacle(this, tileArray.length - 1, i));
 		}
 		bomberMans = new ArrayList<PC>();
+
+		setBackground(new Color(220,220,140));
 	}
 
 	synchronized boolean addTile(Tile newTile) {
@@ -63,8 +66,8 @@ public class Field extends JPanel {
 			repaint(100, newTile.x, newTile.y, 40, 40);
 			return true;
 		}else {
-		System.out.println("frameX: " + newTile.frameX + "    frameY: " + newTile.frameY + "  not null");
-		System.out.println(tileArray[newTile.frameX][newTile.frameY].getClass());
+		//System.out.println("frameX: " + newTile.frameX + "    frameY: " + newTile.frameY + "  not null");
+		//System.out.println(tileArray[newTile.frameX][newTile.frameY].getClass());
 		return false;}
 	}
 
@@ -95,6 +98,12 @@ public class Field extends JPanel {
 		return tileArray;
 	}
 
+	private void setNewBomb(BomberMan bm) {
+		if(bm.newBomb != null) {
+			addTile(bm.newBomb);
+		}
+	}
+
 	synchronized boolean toRight(Creature source) {
 		int x = source.frameX + 1;
 		int y = source.frameY;
@@ -102,6 +111,8 @@ public class Field extends JPanel {
 			tileArray[x - 1][y] = null;
 			tileArray[x][y] = source;
 			source.setFrameX(x);
+			if(source instanceof BomberMan)
+				setNewBomb((BomberMan)source);
 			return true;
 		} else {
 			return false;
@@ -115,6 +126,8 @@ public class Field extends JPanel {
 			tileArray[x + 1][y] = null;
 			tileArray[x][y] = source;
 			source.setFrameX(x);
+			if(source instanceof BomberMan)
+				setNewBomb((BomberMan)source);
 			return true;
 		} else {
 			return false;
@@ -128,6 +141,8 @@ public class Field extends JPanel {
 			tileArray[x][y + 1] = null;
 			tileArray[x][y] = source;
 			source.setFrameY(y);
+			if(source instanceof BomberMan)
+				setNewBomb((BomberMan)source);
 			return true;
 		} else {
 			return false;
@@ -141,13 +156,15 @@ public class Field extends JPanel {
 			tileArray[x][y - 1] = null;
 			tileArray[x][y] = source;
 			source.setFrameY(y);
+			if(source instanceof BomberMan)
+				setNewBomb((BomberMan)source);
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	void init1PC() {
+	void init2PC() {
 		bomberMans.add(new PC(this, 1, 1));
 		bomberMans.add(new PC(this, 19,15));
 		keyListener.addPlayer((PC) bomberMans.get(0));
@@ -162,21 +179,24 @@ public class Field extends JPanel {
 		addTile(enemy3);
 		Cheetah enemy1 = new Cheetah(this, 19, 1);
 		addTile(enemy1);
-		
-		deployBricks(140, 6, 9, 1);
-		
+		Suica enemy4 = new Suica(this, 10,1);
+		addTile(enemy4);
+
+		deployBricks(160, 6, 9, 1, 1, 6);
+
 		new Thread(enemy0).start();
 		new Thread(enemy2).start();
 		new Thread(enemy1).start();
 		new Thread(enemy3).start();
+		new Thread(enemy4).start();
 	}
 
-	void deployBricks(int number, int fireUp, int bombNumberUp, int FirePowerUp3) {
+	void deployBricks(int number, int fireUp, int bombNumberUp, int firePowerUp3, int penetrate, int speed) {
 		ArrayList<BrakableBlock> bricks = new ArrayList<BrakableBlock>();
 		for (int i = 0; i < number; i++) {
 			int depX = (int) (Math.random() * (tileArray.length-2))+1;
 			int depY = (int) (Math.random() * (tileArray[0].length-2))+1;
-			
+
 			BrakableBlock block = new BrakableBlock(this, depX, depY);
 			bricks.add(block);
 			if(fireUp > 0) {
@@ -189,9 +209,19 @@ public class Field extends JPanel {
 				bombNumberUp--;
 				continue;
 			}
-			if(FirePowerUp3 > 0) {
+			if(firePowerUp3 > 0) {
 				block.setItem(new FirePowerUp(3));
-				FirePowerUp3--;
+				firePowerUp3--;
+				continue;
+			}
+			if(speed > 0) {
+				block.setItem(new SpeedUp());
+				speed--;
+				continue;
+			}
+			if(penetrate > 0) {
+				block.setItem(new PenetrateBomb());
+				penetrate--;
 				continue;
 			}
 		}
@@ -209,7 +239,7 @@ public class Field extends JPanel {
 				removeTile(tileArray[emptyPoint[i].x][emptyPoint[i].y]);
 			}
 		}
-		
+
 	}
 
 	void death(Creature creature) {

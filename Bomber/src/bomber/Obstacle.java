@@ -31,6 +31,12 @@ public class Obstacle extends Tile {
 	public void paint(Graphics g) {
 		g.setColor(Color.gray);
 		g.fill3DRect(0, 0, 40, 40, true);
+		g.setColor(Color.LIGHT_GRAY);
+		g.drawLine(1, 1, 1,38);
+		g.drawLine(1, 1, 38, 1);
+		g.setColor(Color.DARK_GRAY);
+		g.drawLine(1, 38, 38,38);
+		g.drawLine(38, 1, 38, 38);
 	}
 
 }

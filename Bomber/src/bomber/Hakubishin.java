@@ -3,11 +3,11 @@ package bomber;
 import java.awt.Image;
 
 public class Hakubishin extends Enemy {
-private BomberMan target;
+	private BomberMan target;
 
 	Hakubishin(Field container, int x, int y) {
 		super(container, x, y);
-		
+
 		speed = 170;
 	}
 
@@ -16,18 +16,24 @@ private BomberMan target;
 		target = null;
 		super.kill(null);
 	}
+
 	@Override
 	public void run() {
-		while(alive) {
-			
-		try {
-			Thread.sleep(speed);
-		} catch (Exception e) {
-			System.out.println("Cat -> run()");
-			e.printStackTrace();
+		while (alive) {
+			if (container.getBomberManNumber() > 0) {
+				target = container.getBomberMan((int) (Math.random() * container.getBomberManNumber()));
+			} else {
+				target = null;
+			}
+
+			try {
+				Thread.sleep(speed);
+			} catch (Exception e) {
+				System.out.println("Cat -> run()");
+				e.printStackTrace();
+			}
 		}
 	}
-		}
 
 	@Override
 	Image getKillImage() {
@@ -38,7 +44,7 @@ private BomberMan target;
 	@Override
 	void contact() {
 		// TODO 自動生成されたメソッド・スタブ
-		
+
 	}
 
 }

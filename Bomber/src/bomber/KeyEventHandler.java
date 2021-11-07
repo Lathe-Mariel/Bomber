@@ -25,7 +25,6 @@ public class KeyEventHandler implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO 自動生成されたメソッド・スタブ
 
 	}
 
@@ -39,14 +38,15 @@ public class KeyEventHandler implements KeyListener {
 	private void keyPressHandler() {
 		if (keyState[4]) {
 			if (!doublePressLock) {
+				doublePressLock = true;
 			new Thread() {
 				public void run() {
-					doublePressLock = true;
 					players[0].putOnBomb();
 				}
 			}.start();}
 		} else if (keyState[9]) {
 			if (!doublePressLockP2) {
+				doublePressLockP2 = true;
 			new Thread() {
 				public void run() {
 					players[1].putOnBomb();
@@ -119,7 +119,6 @@ public class KeyEventHandler implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO 自動生成されたメソッド・スタブ
 		int key = e.getKeyCode();
 		switch (key) {
 		case KeyEvent.VK_S:
@@ -159,7 +158,7 @@ public class KeyEventHandler implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO 自動生成されたメソッド・スタブ
+		// TODO 閾ｪ蜍慕函謌舌＆繧後◆繝｡繧ｽ繝�繝峨�ｻ繧ｹ繧ｿ繝�
 		int key = e.getKeyCode();
 		switch (key) {
 		case KeyEvent.VK_S:
